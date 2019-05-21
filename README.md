@@ -14,7 +14,7 @@
 
 ## Demo
 
-[DEMO can be found here](https://yankouskia.github.com/get-browser/example)
+[DEMO can be found here](https://yankouskia.github.io/get-browser/example/index.html)
 
 
 Desktop Chrome            |  Mobile Safari
