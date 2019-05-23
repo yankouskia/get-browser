@@ -1,6 +1,6 @@
 {
   "name": "get-browser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lightweight tool to identify the browser",
   "main": "./dist/index.js",
   "repository": "git@github.com:yankouskia/get-browser.git",

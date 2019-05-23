@@ -5,6 +5,7 @@ export default function isChrome() {
   const isOpera = typeof opr !== 'undefined';
   const isEdge = userAgent.indexOf('Edge') > -1;
   const isIOSChrome = userAgent.match('CriOS');
+  const isChromium = userAgent.match('Chromium')
 
   const isDesktopChrome = (
     chrome !== null &&
@@ -14,5 +15,5 @@ export default function isChrome() {
     isEdge === false
   );
 
-  return isIOSChrome || isDesktopChrome;
+  return isIOSChrome || isDesktopChrome || isChromium;
 };
