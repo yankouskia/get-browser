@@ -1,19 +1,132 @@
 {
   "name": "get-browser",
-  "version": "1.0.2",
-  "description": "Lightweight tool to identify the browser",
-  "main": "./dist/index.js",
-  "repository": "git@github.com:yankouskia/get-browser.git",
-  "author": "yankouskia <aleksandr.yankovskiy@gmail.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
-    "babel-loader": "^8.0.6",
-    "webpack": "^4.32.0",
-    "webpack-cli": "^3.3.2"
+  "version": "2.0.0",
+  "description": "Lightweight, SSR-safe browser detection — strict TypeScript types, dual ESM + CJS, zero runtime dependencies.",
+  "keywords": [
+    "browser",
+    "browser-detection",
+    "user-agent",
+    "ua",
+    "is-chrome",
+    "is-safari",
+    "is-firefox",
+    "is-edge",
+    "is-mobile",
+    "is-android",
+    "is-ie",
+    "is-opera",
+    "detect-browser",
+    "feature-detection",
+    "ssr",
+    "typescript",
+    "esm",
+    "cjs"
+  ],
+  "homepage": "https://yankouskia.github.io/get-browser",
+  "bugs": {
+    "url": "https://github.com/yankouskia/get-browser/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yankouskia/get-browser.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "yankouskia",
+    "email": "aleksandr.yankovskiy@gmail.com",
+    "url": "https://github.com/yankouskia"
+  },
+  "funding": "https://github.com/sponsors/yankouskia",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/index.d.mts",
+        "require": "./dist/index.d.cts"
+      },
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "unpkg": "./dist/umd/get-browser.global.js",
+  "jsdelivr": "./dist/umd/get-browser.global.js",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md",
+    "BREAKING_CHANGES.md"
+  ],
   "scripts": {
-    "build": "NODE_ENV=production webpack -p"
-  }
+    "build": "tsup",
+    "clean": "rimraf dist coverage docs/api",
+    "dev": "tsup --watch",
+    "docs": "typedoc",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "check": "biome check .",
+    "prepublishOnly": "pnpm run clean && pnpm run typecheck && pnpm run lint && pnpm run test && pnpm run build && pnpm run validate",
+    "size": "size-limit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "validate": "publint && attw --pack ."
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.17.4",
+    "@biomejs/biome": "^1.9.4",
+    "@changesets/cli": "^2.27.11",
+    "@size-limit/preset-small-lib": "^11.1.6",
+    "@types/node": "^22.10.7",
+    "@vitest/coverage-v8": "^2.1.8",
+    "expect-type": "^1.1.0",
+    "happy-dom": "^16.5.3",
+    "lefthook": "^1.10.1",
+    "publint": "^0.3.2",
+    "rimraf": "^6.0.1",
+    "size-limit": "^11.1.6",
+    "tsup": "^8.3.5",
+    "typedoc": "^0.27.6",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "pnpm@9.15.4",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "size-limit": [
+    {
+      "name": "ESM (full)",
+      "path": "dist/index.mjs",
+      "limit": "3 kB"
+    },
+    {
+      "name": "ESM (detect only, tree-shaken)",
+      "path": "dist/index.mjs",
+      "import": "{ detect }",
+      "limit": "2 kB"
+    },
+    {
+      "name": "CJS",
+      "path": "dist/index.cjs",
+      "limit": "3 kB"
+    },
+    {
+      "name": "UMD (minified)",
+      "path": "dist/umd/get-browser.global.js",
+      "limit": "3 kB"
+    }
+  ]
 }
