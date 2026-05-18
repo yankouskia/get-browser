@@ -1,0 +1,23 @@
+* text=auto eol=lf
+
+# Force LF in shell-ish files
+*.sh        text eol=lf
+*.bash      text eol=lf
+
+# Binary-ish: prevent diffs from being noisy
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.ico       binary
+*.svg       text
+
+# Lockfiles
+pnpm-lock.yaml -diff merge=ours linguist-generated=true
+yarn.lock      -diff linguist-generated=true
+package-lock.json -diff linguist-generated=true
+
+# Generated
+dist/**           linguist-generated=true
+docs/api/**       linguist-generated=true
+coverage/**       linguist-generated=true
