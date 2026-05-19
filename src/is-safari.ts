@@ -20,7 +20,8 @@ export function isSafari(options?: DetectOptions): boolean {
   const { userAgent, vendor } = resolveEnvironment(options);
 
   const looksLikeSafariUA =
-    userAgent.includes('Safari') && !/\b(?:CriOS|FxiOS|EdgiOS|OPiOS|Chrome|Chromium|OPR)\//.test(userAgent);
+    userAgent.includes('Safari') &&
+    !/\b(?:CriOS|FxiOS|EdgiOS|OPiOS|Chrome|Chromium|OPR)\//.test(userAgent);
 
   if (vendor) {
     return vendor.includes('Apple') && looksLikeSafariUA;

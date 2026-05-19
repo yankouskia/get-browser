@@ -40,23 +40,30 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": {
-        "import": "./dist/index.d.mts",
-        "require": "./dist/index.d.cts"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
       },
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
+  "types": "./dist/index.d.ts",
   "unpkg": "./dist/umd/get-browser.global.js",
   "jsdelivr": "./dist/umd/get-browser.global.js",
   "sideEffects": false,
   "files": [
-    "dist",
+    "dist/**/*.cjs",
+    "dist/**/*.mjs",
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "dist/**/*.d.cts",
+    "dist/**/*.d.mts",
     "LICENSE",
     "README.md",
     "CHANGELOG.md",
@@ -81,7 +88,7 @@
     "validate": "publint && attw --pack ."
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.18.2",
+    "@arethetypeswrong/cli": "^0.17.4",
     "@biomejs/biome": "^2.4.15",
     "@changesets/cli": "^2.31.0",
     "@size-limit/preset-small-lib": "^12.1.0",
@@ -128,5 +135,10 @@
       "path": "dist/umd/get-browser.global.js",
       "limit": "3 kB"
     }
-  ]
+  ],
+  "pnpm": {
+    "patchedDependencies": {
+      "@arethetypeswrong/core@0.17.4": "patches/@arethetypeswrong__core@0.17.4.patch"
+    }
+  }
 }
