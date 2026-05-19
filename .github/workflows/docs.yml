@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   build:
-    name: Build docs site
+    name: Build Docusaurus site
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -25,18 +25,33 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run build
-      - run: pnpm run docs
 
-      - name: Build static site (TypeDoc + example assets)
+      # The library has to be built first — the Docusaurus site imports
+      # `get-browser` (via file: dependency) for its live playground.
+      - name: Install root deps
+        run: pnpm install --frozen-lockfile
+      - name: Build library
+        run: pnpm run build
+
+      - name: Install website deps
+        working-directory: website
+        run: pnpm install
+
+      - name: Build Docusaurus
+        working-directory: website
+        run: pnpm run build
+
+      # The example/ directory is a static visual demo using the UMD bundle.
+      # Layout we ship to Pages:
+      #   /get-browser/                    Docusaurus landing
+      #   /get-browser/example/index.html  visual demo
+      #   /get-browser/dist/...            UMD bundle (resolved as ../dist/ from example)
+      - name: Bundle static visual demo
         run: |
-          mkdir -p site
-          cp -R docs/api/. site/
-          mkdir -p site/example
-          cp -R example/. site/example/
-          cp -R dist site/example/dist
-          ls -la site
+          mkdir -p website/build/example website/build/dist
+          cp -R example/. website/build/example/
+          cp -R dist/. website/build/dist/
+          ls -la website/build website/build/example website/build/dist/umd
 
       - name: Setup Pages
         # actions/configure-pages@v5
@@ -46,7 +61,7 @@ jobs:
         # actions/upload-pages-artifact@v3.0.1
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
         with:
-          path: ./site
+          path: ./website/build
 
   deploy:
     name: Deploy to GitHub Pages

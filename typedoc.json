@@ -1,0 +1,25 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/index.ts"],
+  "out": "docs/api",
+  "tsconfig": "./tsconfig.json",
+  "readme": "./README.md",
+  "name": "get-browser",
+  "includeVersion": true,
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "excludeExternals": true,
+  "githubPages": true,
+  "hideGenerator": false,
+  "navigationLinks": {
+    "GitHub": "https://github.com/yankouskia/get-browser",
+    "npm": "https://www.npmjs.com/package/get-browser",
+    "Changelog": "https://github.com/yankouskia/get-browser/blob/master/CHANGELOG.md"
+  },
+  "sidebarLinks": {
+    "Breaking changes": "https://github.com/yankouskia/get-browser/blob/master/BREAKING_CHANGES.md"
+  },
+  "sort": ["alphabetical"],
+  "categorizeByGroup": true,
+  "treatWarningsAsErrors": false
+}

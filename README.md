@@ -1,149 +1,200 @@
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/yankouskia/get-browser/pulls) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/yankouskia/get-browser/blob/master/LICENSE)
+<p align="center">
+  <a href="https://yankouskia.github.io/get-browser/">
+    <img src="./resources/hero.svg" alt="get-browser — lightweight, SSR-safe browser detection" width="100%" />
+  </a>
+</p>
 
-[![NPM](https://nodei.co/npm/get-browser.png?downloads=true)](https://www.npmjs.com/package/get-browser)
+<h1 align="center">get-browser</h1>
 
-# get-browser
+<p align="center">
+  <strong>Tiny, typed, SSR-safe browser detection.</strong><br />
+  One call. One canonical answer. <strong>~1.5&nbsp;kB</strong> min+gzip. Zero dependencies.
+</p>
 
-💻 Lightweight tool to identify the browser (with mobile/desktop detection) 📱
+<p align="center">
+  <a href="https://www.npmjs.com/package/get-browser"><img alt="npm" src="https://img.shields.io/npm/v/get-browser?style=for-the-badge&color=cb3837&logo=npm&logoColor=white"></a>
+  <a href="https://bundlephobia.com/package/get-browser"><img alt="size" src="https://img.shields.io/bundlephobia/minzip/get-browser?style=for-the-badge&label=min%2Bgzip&color=00c2cb"></a>
+  <a href="https://github.com/yankouskia/get-browser/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/yankouskia/get-browser/ci.yml?branch=master&style=for-the-badge&logo=github&label=CI"></a>
+  <a href="https://www.typescriptlang.org/"><img alt="types" src="https://img.shields.io/badge/types-strict-3178c6?style=for-the-badge&logo=typescript&logoColor=white"></a>
+  <a href="https://github.com/yankouskia/get-browser/blob/master/LICENSE"><img alt="MIT" src="https://img.shields.io/npm/l/get-browser?style=for-the-badge&color=blue"></a>
+</p>
 
+<p align="center">
+  <a href="https://yankouskia.github.io/get-browser/"><strong>📚 Docs site</strong></a> ·
+  <a href="https://yankouskia.github.io/get-browser/playground"><strong>🧪 Playground</strong></a> ·
+  <a href="https://yankouskia.github.io/get-browser/docs/recipes"><strong>🍳 Recipes</strong></a> ·
+  <a href="https://yankouskia.github.io/get-browser/docs/migration"><strong>↗️ v1 → v2</strong></a>
+</p>
 
-| <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/internet-explorer/internet-explorer_512x512.png" alt="IE" width="48px" height="48px"/></br> Internet Explorer | <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/edge/edge_512x512.png" alt="Edge" width="48px" height="48px" /></br> Microsoft Edge | <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/firefox/firefox_512x512.png" alt="Firefox" width="48px" height="48px" /><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/firefox-developer-edition/firefox-developer-edition_512x512.png" alt="Firefox Dev" width="48px" height="48px" /></br> Mozilla Firefox | <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/chrome/chrome_512x512.png" alt="Chrome" width="48px" height="48px" /><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/chrome-dev/chrome-dev_512x512.png" alt="Chrome Dev" width="48px" height="48px" /><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/archive/chrome-canary_19-48/chrome-canary_19-48_512x512.png" alt="Chrome Canary" width="48px" height="48px" /></br> Google Chrome | <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/opera/opera_512x512.png" alt="Opera" width="48px" height="48px" /><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/opera-developer/opera-developer_512x512.png" alt="Opera Dev" width="48px" height="48px" /></br> Opera | <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/safari/safari_512x512.png" alt="Safari" width="48px" height="48px" /><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/safari-technology-preview/safari-technology-preview_512x512.png" alt="Safari TP" width="48px" height="48px" /><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/safari-ios/safari-ios_512x512.png" alt="Safari iOS" width="48px" height="48px" /></br> Safari | <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/android-webview-beta/android-webview-beta_512x512.png" alt="Android WebView" width="48px" height="48px" /></br> Android WebView
-| --- | --- | --- | --- | --- | --- | ---
-| 7+ | 12+ | 5+ | 31+ | 18+ | 6+ | 20+
+---
 
+```ts
+import { detect, isMobile, browsers } from 'get-browser';
 
-## Demo
+if (detect() === browsers.SAFARI && isMobile()) {
+  applyMobileSafariFix();
+}
+```
 
-[DEMO can be found here](https://yankouskia.github.io/get-browser/example/index.html)
+That's the whole pitch. `detect()` returns a strict union — `'chrome' | 'edge' | 'firefox' | 'safari' | 'opera' | 'ie' | 'android' | 'unknown'` — and a handful of tree-shakeable predicates do the boolean version.
 
-
-Desktop Chrome            |  Mobile Safari
-:-------------------------:|:-------------------------:
-<img src="./resources/desktop_chrome.gif" data-canonical-src="./resources/desktop_chrome.gif" width="300" />  |  <img src="./resources/mobile_safari.gif" data-canonical-src="./resources/mobile_safari.gif" width="300" />
-
-## Motivation
-
-Lightweight tool for easy way to identify the browser. User Agent does not always provide entire information about the browser. Additional checks are used.
-
-## How to use
-
-To install library:
+## Install
 
 ```sh
-# yarn
-yarn add get-browser
-
-# npm
-npm install get-browser --save
+pnpm add get-browser    # or npm / yarn / bun
 ```
 
-Library is designed to identify browser and device type (mobile / desktop)
+No bundler? Drop in the UMD bundle:
 
-```js
-// ES6 modules
-import {
-  browsers,
-  detect,
-  isMobile,
+```html
+<script src="https://unpkg.com/get-browser/dist/umd/get-browser.global.js"></script>
+<script>
+  if (GetBrowser.isMobile()) document.body.classList.add('is-mobile');
+</script>
+```
 
-  isAndroid,
-  isChrome,
-  isEdge,
-  isFirefox,
-  isIE,
-  isOpera,
-  isSafari,
-} from 'get-browser';
+## Why you'd use this
 
-// CommonJS modules
-const {
-  browsers,
-  detect,
-  isMobile,
+- 🪶 **Tiny** — ~1.5 kB min+gzip, zero dependencies, tree-shakeable.
+- 🧠 **Typed** — `detect()` returns the `Browser` union, never `string`. Exhaustive switches compile.
+- 🏗️ **SSR-safe** — every detector takes `{ userAgent }`. Works in Node, Next.js, Remix, Astro, Workers, Deno.
+- 🎯 **Honest** — it answers *who*, not *what*. For capability checks use `@supports` / `matchMedia`.
 
-  isAndroid,
-  isChrome,
-  isEdge,
-  isFirefox,
-  isIE,
-  isOpera,
-  isSafari,
-} = require('get-browser');
+> [!TIP]
+> Want to see it in action without installing anything? Open the **[Playground](https://yankouskia.github.io/get-browser/playground)** — paste any user-agent and watch every predicate light up.
 
-// Enumeration with all supported browsers is provided:
-console.log(browsers);
-/*
-{
-  ANDROID: 'android',
-  CHROME: 'chrome',
-  EDGE: 'edge',
-  FIREFOX: 'firefox',
-  IE: 'ie',
-  OPERA: 'opera',
-  SAFARI: 'safari',
-  UNKNOWN: 'unknown',
+## Usage
+
+<details open>
+<summary><strong>Switch on the browser</strong></summary>
+
+```ts
+import { detect, browsers } from 'get-browser';
+
+switch (detect()) {
+  case browsers.CHROME:  loadChromeShim();          break;
+  case browsers.SAFARI:  patchSafariScrollBug();    break;
+  case browsers.FIREFOX: enableFirefoxOnlyFeature(); break;
+  case browsers.UNKNOWN: /* bot or new browser */    break;
 }
-*/
-
-// To detect browser:
-const browser = detect(); // one from the browsers list will be displayed
-
-// To detect whether mobile device is used:
-const isMobileDevice = isMobile();
-
-// To detect whether user is in Firefox browser:
-const isFirefoxBrowser = isFirefox();
-
 ```
+
+</details>
+
+<details>
+<summary><strong>Booleans — tree-shakes to ~400 bytes per predicate</strong></summary>
+
+```ts
+import { isMobile, isChrome, isSafari } from 'get-browser';
+
+if (isMobile() && !isChrome()) showNonChromeMobileBanner();
+if (isSafari() && isMobile()) applyMobileSafariFix();
+```
+
+</details>
+
+<details>
+<summary><strong>Server-side — Next.js, Remix, Workers, Deno</strong></summary>
+
+```ts
+// Next.js Edge route — runs on Cloudflare too
+export const runtime = 'edge';
+
+import { detect } from 'get-browser';
+
+export function GET(req: Request) {
+  const userAgent = req.headers.get('user-agent') ?? '';
+  return Response.json({ browser: detect({ userAgent }) });
+}
+```
+
+The library never touches `window` at import time. Pass an explicit UA and detection becomes a pure function — perfect for tests and SSR. Full framework cookbook in the [SSR guide](https://yankouskia.github.io/get-browser/docs/guides/ssr).
+
+</details>
+
+<details>
+<summary><strong>Type-safe analytics tagging</strong></summary>
+
+```ts
+import { type Browser, detect } from 'get-browser';
+
+const engineOf = (b: Browser) =>
+  ({
+    chrome: 'chromium', edge: 'chromium', opera: 'chromium',
+    firefox: 'gecko',   safari: 'webkit', ie: 'trident',
+    android: 'legacy-webkit', unknown: 'unknown',
+  } as const)[b];
+
+analytics.track('page_view', { engine: engineOf(detect()) });
+```
+
+If a future major bumps `Browser`, the compiler refuses to build. No silent drift.
+
+</details>
 
 ## API
 
-`browsers`
+Eleven exports. That's all.
 
-Exposed enumeration for providing constant for each browser.
+| | |
+| --- | --- |
+| `detect(opts?)` | Returns one of the [`browsers`](https://yankouskia.github.io/get-browser/docs/api/browsers) values |
+| `isChrome / isEdge / isFirefox / isSafari` | `(opts?) => boolean` |
+| `isOpera / isIE / isAndroid / isMobile` | `(opts?) => boolean` |
+| `browsers` | Frozen enum: `{ CHROME: 'chrome', ... }` |
+| `Browser`, `DetectOptions` | Type-only exports |
 
-`detect(): string<oneof browsers>`
+`opts` is `{ userAgent?: string; vendor?: string }` — pass it for SSR or tests, leave it for client-side use.
 
-Returns the browser name
+**[Full API reference →](https://yankouskia.github.io/get-browser/docs/api/detect)**
 
-`isMobile(): boolean`
+## How it stacks up
 
-Returns true if mobile device is being used
+| Bundle (min+gz) | get-browser | detect-browser | bowser | ua-parser-js |
+| --- | :-: | :-: | :-: | :-: |
+| | 🏆 **~1.5 kB** | ~2 kB | ~7 kB | ~10 kB |
 
-`isAndroid(): boolean`
+Pick `ua-parser-js` if you need version numbers or device info. Pick `get-browser` if you just need the single, lowercase, typed answer to *which browser is this?* — see [the full comparison](https://yankouskia.github.io/get-browser/docs/comparison).
 
-Return true if Android browser us being used
+## What it detects
 
-`isChrome(): boolean`
+<p align="center">
+  <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/chrome/chrome_512x512.png" width="40" alt="Chrome" />
+  <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/edge/edge_512x512.png" width="40" alt="Edge" />
+  <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/firefox/firefox_512x512.png" width="40" alt="Firefox" />
+  <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/safari/safari_512x512.png" width="40" alt="Safari" />
+  <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/opera/opera_512x512.png" width="40" alt="Opera" />
+  <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/safari-ios/safari-ios_512x512.png" width="40" alt="Safari iOS" />
+  <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/android-webview-beta/android-webview-beta_512x512.png" width="40" alt="Android" />
+  <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/35.1.0/internet-explorer/internet-explorer_512x512.png" width="40" alt="IE" />
+</p>
 
-Return true if Google Chrome browser us being used
+Chrome, Edge (legacy & Chromium), Firefox, Safari (desktop, iOS, iPadOS), Opera (Presto & OPR), Internet Explorer 6-11, Android WebView — including iOS variants (`CriOS`, `FxiOS`, `EdgiOS`) and mobile / tablet user-agents. Coverage details: [browser support](https://yankouskia.github.io/get-browser/docs/browser-support).
 
-`isEdge(): boolean`
+## Requirements
 
-Return true if Edge browser us being used
+- **Node ≥ 20** (active LTS — 20, 22, 24)
+- **TypeScript ≥ 5.0** if you use types
+- **Browsers** — evergreen. UMD bundle is ES2018.
 
-`isFirefox(): boolean`
+## Documentation
 
-Return true if Firefox browser us being used
+The full docs are built with [Docusaurus](https://docusaurus.io/) and deployed to GitHub Pages:
 
-`isIE(): boolean`
+| 📚 [Docs](https://yankouskia.github.io/get-browser/docs/intro) | 🔌 [API](https://yankouskia.github.io/get-browser/docs/api/detect) | 🧪 [Playground](https://yankouskia.github.io/get-browser/playground) | 🍳 [Recipes](https://yankouskia.github.io/get-browser/docs/recipes) | 🏗️ [SSR](https://yankouskia.github.io/get-browser/docs/guides/ssr) | 🔄 [Migration](https://yankouskia.github.io/get-browser/docs/migration) |
+| :-: | :-: | :-: | :-: | :-: | :-: |
 
-Return true if Internet Explorer browser us being used
+Run the docs locally:
 
-`isOpera(): boolean`
+```sh
+pnpm install
+pnpm run build              # build the library first
+pnpm run website:install
+pnpm run website:dev        # http://localhost:3000
+```
 
-Return true if Opera browser us being used
+## Contributing & license
 
-`isSafari(): boolean`
+PRs welcome — see [`CONTRIBUTING.md`](./CONTRIBUTING.md). For security issues, see [`SECURITY.md`](./SECURITY.md) (please don't open public issues for vulnerabilities).
 
-Return true if Safari browser us being used
-
-
-## Contributing
-
-`get-browser` is open-source library, opened for contributions
-
-
-### License
-
-`get-browser` is [MIT licensed](https://github.com/yankouskia/get-browser/blob/master/LICENSE)
+[MIT](./LICENSE) © yankouskia and contributors.

@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-label="get-browser — lightweight, SSR-safe browser detection">
+  <title>get-browser hero</title>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1530"/>
+      <stop offset="100%" stop-color="#06283d"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2c7be5"/>
+      <stop offset="100%" stop-color="#00c2cb"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4ce5e5" stop-opacity="0.42"/>
+      <stop offset="100%" stop-color="#4ce5e5" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="420" fill="url(#bg)"/>
+  <rect width="1200" height="420" fill="url(#grid)"/>
+  <ellipse cx="950" cy="220" rx="320" ry="220" fill="url(#glow)"/>
+
+  <!-- ─── Left: title + tagline + code mock ─── -->
+  <g transform="translate(60, 90)">
+    <text font-family="ui-monospace, 'SF Mono', Menlo, monospace" font-size="13" fill="#6ba6f5" letter-spacing="3" font-weight="600">
+      ~ 1.5 KB · ZERO DEPS · TYPED · SSR-SAFE
+    </text>
+    <text y="62" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="62" font-weight="800" fill="#fff" letter-spacing="-1.5">
+      get-browser
+    </text>
+    <text y="110" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="22" fill="#c5dcfb" font-weight="500">
+      One tiny call. One canonical answer.
+    </text>
+
+    <!-- code mock -->
+    <g transform="translate(0, 155)">
+      <rect width="520" height="130" rx="12" fill="#0f1e3d" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+      <g transform="translate(20, 22)">
+        <circle r="6" cx="0" cy="0" fill="#ff5f57"/>
+        <circle r="6" cx="20" cy="0" fill="#febc2e"/>
+        <circle r="6" cx="40" cy="0" fill="#28c840"/>
+        <text x="74" y="4" font-family="ui-monospace, 'SF Mono', Menlo, monospace" font-size="12" fill="rgba(255,255,255,0.45)">
+          detect.ts
+        </text>
+      </g>
+      <!-- line 1 -->
+      <g font-family="ui-monospace, 'SF Mono', Menlo, monospace" font-size="16">
+        <text x="24" y="72">
+          <tspan fill="#ff79c6">const</tspan><tspan fill="#fff" xml:space="preserve"> browser </tspan><tspan fill="#8b9bb5">=</tspan><tspan xml:space="preserve" fill="#fff"> </tspan><tspan fill="#8be9fd">detect</tspan><tspan fill="#fff">();</tspan>
+        </text>
+        <!-- line 2: cycling result text — six stacked overlays -->
+        <text x="24" y="106" fill="#6c7a8c">// →</text>
+        <g transform="translate(70, 106)" font-weight="700" fill="#50fa7b">
+          <text opacity="0">'chrome'<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="0s" repeatCount="indefinite"/></text>
+          <text opacity="0">'edge'<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="1.5s" repeatCount="indefinite"/></text>
+          <text opacity="0">'firefox'<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="3s" repeatCount="indefinite"/></text>
+          <text opacity="0">'safari'<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="4.5s" repeatCount="indefinite"/></text>
+          <text opacity="0">'opera'<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="6s" repeatCount="indefinite"/></text>
+          <text opacity="0">'android'<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="7.5s" repeatCount="indefinite"/></text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ─── Right: animated detected family + browser parade ─── -->
+  <g transform="translate(680, 75)">
+    <text font-family="ui-monospace, 'SF Mono', Menlo, monospace" font-size="11" fill="rgba(255,255,255,0.5)" letter-spacing="2" font-weight="600">
+      DETECTED FAMILY
+    </text>
+
+    <!-- big cycling browser name -->
+    <g transform="translate(0, 50)" font-family="system-ui, sans-serif" font-size="44" font-weight="800">
+      <text fill="#fff" opacity="0">Chrome<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="0s" repeatCount="indefinite"/></text>
+      <text fill="#fff" opacity="0">Edge<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="1.5s" repeatCount="indefinite"/></text>
+      <text fill="#fff" opacity="0">Firefox<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="3s" repeatCount="indefinite"/></text>
+      <text fill="#fff" opacity="0">Safari<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="4.5s" repeatCount="indefinite"/></text>
+      <text fill="#fff" opacity="0">Opera<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="6s" repeatCount="indefinite"/></text>
+      <text fill="#fff" opacity="0">Android<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="7.5s" repeatCount="indefinite"/></text>
+    </g>
+
+    <!-- browser tile row (6 tiles, 60x60, 75px pitch) -->
+    <g transform="translate(0, 130)">
+      <g transform="translate(0,0)">
+        <rect width="60" height="60" rx="14" fill="#fff" opacity="0.08"/>
+        <rect width="60" height="60" rx="14" fill="none" stroke="#4285F4" stroke-width="2" opacity="0">
+          <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="0s" repeatCount="indefinite"/>
+        </rect>
+        <circle cx="30" cy="30" r="16" fill="none" stroke="#4285F4" stroke-width="4"/>
+        <circle cx="30" cy="30" r="6" fill="#4285F4"/>
+        <text x="30" y="80" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="rgba(255,255,255,0.55)">chrome</text>
+      </g>
+      <g transform="translate(75,0)">
+        <rect width="60" height="60" rx="14" fill="#fff" opacity="0.08"/>
+        <rect width="60" height="60" rx="14" fill="none" stroke="#0078D7" stroke-width="2" opacity="0">
+          <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="1.5s" repeatCount="indefinite"/>
+        </rect>
+        <path d="M 30 14 C 20 14 14 22 14 32 C 14 40 18 46 26 46 L 36 46 C 32 44 30 40 30 36 C 30 28 36 22 44 22 C 44 16 38 14 30 14 Z" fill="#0078D7"/>
+        <text x="30" y="80" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="rgba(255,255,255,0.55)">edge</text>
+      </g>
+      <g transform="translate(150,0)">
+        <rect width="60" height="60" rx="14" fill="#fff" opacity="0.08"/>
+        <rect width="60" height="60" rx="14" fill="none" stroke="#FF7139" stroke-width="2" opacity="0">
+          <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="3s" repeatCount="indefinite"/>
+        </rect>
+        <circle cx="30" cy="30" r="16" fill="#FF7139"/>
+        <circle cx="30" cy="30" r="9" fill="#FBC02D"/>
+        <text x="30" y="80" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="rgba(255,255,255,0.55)">firefox</text>
+      </g>
+      <g transform="translate(225,0)">
+        <rect width="60" height="60" rx="14" fill="#fff" opacity="0.08"/>
+        <rect width="60" height="60" rx="14" fill="none" stroke="#1AB6FF" stroke-width="2" opacity="0">
+          <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="4.5s" repeatCount="indefinite"/>
+        </rect>
+        <circle cx="30" cy="30" r="16" fill="none" stroke="#1AB6FF" stroke-width="3"/>
+        <path d="M 30 18 L 33 30 L 30 42 L 27 30 Z" fill="#fff"/>
+        <text x="30" y="80" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="rgba(255,255,255,0.55)">safari</text>
+      </g>
+      <g transform="translate(300,0)">
+        <rect width="60" height="60" rx="14" fill="#fff" opacity="0.08"/>
+        <rect width="60" height="60" rx="14" fill="none" stroke="#FF1B2D" stroke-width="2" opacity="0">
+          <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="6s" repeatCount="indefinite"/>
+        </rect>
+        <ellipse cx="30" cy="30" rx="16" ry="12" fill="none" stroke="#FF1B2D" stroke-width="4"/>
+        <text x="30" y="80" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="rgba(255,255,255,0.55)">opera</text>
+      </g>
+      <g transform="translate(375,0)">
+        <rect width="60" height="60" rx="14" fill="#fff" opacity="0.08"/>
+        <rect width="60" height="60" rx="14" fill="none" stroke="#3DDC84" stroke-width="2" opacity="0">
+          <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.14;0.16;1" dur="9s" begin="7.5s" repeatCount="indefinite"/>
+        </rect>
+        <path d="M 18 36 L 18 26 C 18 22 22 18 30 18 C 38 18 42 22 42 26 L 42 36 Z" fill="#3DDC84"/>
+        <circle cx="24" cy="26" r="1.5" fill="#0b1530"/>
+        <circle cx="36" cy="26" r="1.5" fill="#0b1530"/>
+        <rect x="20" y="40" width="20" height="2" fill="#3DDC84"/>
+        <text x="30" y="80" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="rgba(255,255,255,0.55)">android</text>
+      </g>
+    </g>
+  </g>
+
+  <rect x="0" y="408" width="1200" height="3" fill="url(#accent)"/>
+</svg>
