@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  push:
+    branches: [master, main]
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write # required for npm provenance / OIDC publish
+
+jobs:
+  release:
+    name: Release with Changesets
+    if: github.repository == 'yankouskia/get-browser'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        # actions/checkout@v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        # pnpm/action-setup@v4.1.0
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda
+
+      - name: Setup Node
+        # actions/setup-node@v4.4.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Create release PR or publish
+        # changesets/action@v1.5.3
+        uses: changesets/action@e2f8e964d080ae97c874b19e27b12e0a8620fb6c
+        with:
+          publish: pnpm exec changeset publish
+          version: pnpm exec changeset version
+          commit: "chore(release): version packages"
+          title: "chore(release): version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # Trusted publishing (OIDC, no NPM_TOKEN) — once npm is configured for
+          # this package, drop NPM_TOKEN and set NPM_CONFIG_PROVENANCE=true alone.
+          NPM_CONFIG_PROVENANCE: "true"
