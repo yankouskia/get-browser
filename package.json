@@ -85,7 +85,11 @@
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "validate": "publint && attw --pack ."
+    "validate": "publint && attw --pack .",
+    "website:install": "pnpm --dir website install",
+    "website:dev": "pnpm --dir website start",
+    "website:build": "pnpm run build && pnpm --dir website run build",
+    "website:serve": "pnpm --dir website run serve"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.17.4",

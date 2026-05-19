@@ -1,0 +1,49 @@
+{
+  "name": "get-browser-website",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Docusaurus site for the get-browser package — deployed to GitHub Pages.",
+  "scripts": {
+    "docusaurus": "docusaurus",
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "serve": "docusaurus serve",
+    "clear": "docusaurus clear",
+    "typecheck": "tsc --noEmit",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids"
+  },
+  "dependencies": {
+    "@docusaurus/core": "^3.10.0",
+    "@docusaurus/preset-classic": "^3.10.0",
+    "@docusaurus/theme-mermaid": "^3.10.0",
+    "@mdx-js/react": "^3.0.0",
+    "clsx": "^2.1.1",
+    "get-browser": "file:..",
+    "prism-react-renderer": "^2.4.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "^3.10.0",
+    "@docusaurus/tsconfig": "^3.10.0",
+    "@docusaurus/types": "^3.10.0",
+    "@types/react": "^18.3.12",
+    "typescript": "^5.9.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

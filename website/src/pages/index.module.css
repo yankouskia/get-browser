@@ -1,0 +1,253 @@
+/* ─── Shared bits ─── */
+.eyebrow {
+  margin: 0 0 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+}
+
+.sectionHeading {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.accent {
+  background: var(--gb-hero-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sectionLede {
+  margin: 0 0 1.5rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--ifm-color-emphasis-800);
+  max-width: 60ch;
+}
+
+/* ─── Live demo section ─── */
+.demoSection {
+  padding: 5rem 0 3rem;
+}
+
+.demoGrid {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+}
+
+@media (max-width: 996px) {
+  .demoGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bullets {
+  margin: 0 0 1.5rem;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+/* ─── Compare section ─── */
+.compareSection {
+  padding: 5rem 0 3rem;
+}
+
+.compareLink {
+  display: inline-block;
+  margin-top: 1rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+}
+
+.fineprint {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.fineprint code {
+  background: var(--ifm-color-emphasis-200);
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+}
+
+/* ─── Code section (legacy, unused) ─── */
+.codeSection {
+  padding: 5rem 0 3rem;
+}
+
+.codeSectionHead {
+  margin-bottom: 2.5rem;
+  max-width: 720px;
+}
+
+.codeGrid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+}
+
+.codePanel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border-radius: 14px;
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.codeTitle {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.codeBody {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.codeBody code {
+  font-size: 0.92em;
+  background: var(--ifm-color-emphasis-200);
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+}
+
+.codeBlock {
+  border-radius: 10px;
+}
+
+.codeBlock :global(pre) {
+  margin: 0 !important;
+}
+
+.codeLink {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+}
+
+/* ─── CTA ─── */
+.ctaSection {
+  padding: 5rem 0;
+}
+
+.ctaInner {
+  margin: 0 auto;
+  max-width: 760px;
+  padding: 3.5rem 3rem;
+  border-radius: 20px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at top, rgba(255, 255, 255, 0.18) 0%, transparent 60%),
+    var(--gb-hero-accent);
+  color: #fff;
+  box-shadow:
+    0 28px 56px -24px rgba(44, 123, 229, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaInner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  pointer-events: none;
+}
+
+.ctaInner > * {
+  position: relative;
+}
+
+.ctaEyebrow {
+  margin: 0 0 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ctaInner h2 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  color: inherit;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.ctaInner p {
+  margin: 0 0 1.75rem;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.ctaInner p code {
+  background: rgba(255, 255, 255, 0.18);
+  border: none;
+  color: #fff;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+.installLine {
+  display: inline-block;
+  margin: 0 auto 2rem;
+  padding: 0.95rem 1.5rem;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.28);
+  color: #fff;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 1rem;
+}
+
+.ctaButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.ctaInner :global(.button--primary) {
+  background: #fff;
+  color: var(--ifm-color-primary);
+  border-color: #fff;
+}
+
+.ctaInner :global(.button--primary:hover) {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ifm-color-primary-darker);
+}
+
+.ctaInner :global(.button--secondary) {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.ctaInner :global(.button--secondary:hover) {
+  background: rgba(255, 255, 255, 0.28);
+  color: #fff;
+}

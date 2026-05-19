@@ -1,0 +1,119 @@
+.chart {
+  padding: 1.5rem;
+  border-radius: 14px;
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  margin: 1.5rem 0;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+}
+
+.scale {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-600);
+  font-style: italic;
+}
+
+.rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(150px, 200px) 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.name {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.92rem;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--ifm-color-emphasis-900);
+}
+
+.rowHi .name {
+  color: var(--ifm-color-primary);
+  font-weight: 700;
+}
+
+.note {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.barWrap {
+  width: 100%;
+  height: 28px;
+  background: var(--ifm-color-emphasis-200);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar {
+  height: 100%;
+  background: linear-gradient(90deg,
+    var(--ifm-color-emphasis-400) 0%,
+    var(--ifm-color-emphasis-500) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 0.6rem;
+  border-radius: 6px;
+  transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 60px;
+}
+
+.rowHi .bar {
+  background: var(--gb-hero-accent);
+  box-shadow: 0 0 16px rgba(44, 123, 229, 0.4);
+}
+
+.barValue {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ifm-color-emphasis-900);
+}
+
+.rowHi .barValue {
+  color: #fff;
+}

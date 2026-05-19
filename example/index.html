@@ -1,54 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Browser detection</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>get-browser — visual demo</title>
+  <link rel="icon" type="image/svg+xml" href="./chrome.svg" />
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg-start: #2c7be5;
+      --bg-end: #00c2cb;
+      --fg: #fff;
+    }
+    html, body { margin: 0; padding: 0; height: 100%; }
+    body {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+      color: var(--fg);
+      transform: scale(0.1); opacity: 0;
+      animation: bubble 0.9s 0.2s forwards;
+      padding: 2rem;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    @keyframes bubble {
+      0%   { transform: scale(0.1); opacity: 0.1; filter: blur(16px); }
+      80%  { transform: scale(1.05); opacity: 0.95; filter: blur(2px); }
+      100% { transform: scale(1);    opacity: 1;   filter: blur(0); }
+    }
+    .eyebrow {
+      font-size: 0.85rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.12em; opacity: 0.85; margin: 0 0 0.5rem;
+    }
+    .title {
+      font-size: clamp(2rem, 5vw, 3rem); margin: 0 0 1.5rem; font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .title em { font-style: normal; }
+    #icon  { width: 240px; height: 240px; filter: drop-shadow(0 12px 24px rgba(0,0,0,0.25)); }
+    #mobile { width: 140px; height: 140px; margin-top: 0.5rem; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.25)); }
+    .pill {
+      margin-top: 1.5rem; padding: 0.4rem 1rem; border-radius: 999px;
+      background: rgba(0,0,0,0.18); font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.85rem;
+    }
+    a { color: inherit; text-decoration: underline; text-underline-offset: 4px; }
+  </style>
 </head>
-<body style="display: flex; align-items: center; justify-content: center; flex-direction: column; transform: scale(0.1); opacity: 0; padding-top: 40px;">
-  <p id="text" style="font-size: 40px;">Your browser is:</p>
-  <img width="300px" height="300px" id="icon" alt="Loading error ...">
-  <img width="200px" height="200px" id="mobile" alt="Loading error ...">
+<body>
+  <p class="eyebrow">get-browser visual demo</p>
+  <p class="title">Your browser is <em id="text">…</em></p>
+  <img id="icon" alt="" />
+  <img id="mobile" alt="" />
+  <p class="pill" id="ua"></p>
+  <p style="margin-top: 1.5rem; opacity: 0.8;">
+    <a href="../docs/intro">Read the docs →</a>
+  </p>
+
+  <!-- UMD bundle (exposes window.GetBrowser). When served from the published
+       package, ../dist/umd/get-browser.global.js is the right path. -->
+  <script src="../dist/umd/get-browser.global.js"></script>
+  <script>
+    (function () {
+      var text = document.getElementById('text');
+      var icon = document.getElementById('icon');
+      var mobile = document.getElementById('mobile');
+      var uaEl = document.getElementById('ua');
+
+      var browserName = GetBrowser.detect();
+      var isMobileBrowser = GetBrowser.isMobile();
+      var mobileIcon = isMobileBrowser ? 'mobile' : 'desktop';
+
+      text.textContent = browserName;
+      icon.src = './' + browserName + '.svg';
+      mobile.src = './' + mobileIcon + '.svg';
+      uaEl.textContent = navigator.userAgent;
+    })();
+  </script>
 </body>
-<style>
-  @keyframes bubble {
-    0% {
-      transform: scale(0.1);
-      opacity: 0.1;
-      filter: blur(20px);
-    }
-    80% {
-      transform: scale(1.4);
-      opacity: 0.8;
-      filter: blur(5px);
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1.0;
-      filter: blur(0px);
-    }
-  }
-  body {
-    animation: bubble 1s 0.3s forwards;
-  }
-</style>
-<script src="../dist/index.js"></script>
-<script>
-  var text = document.querySelector('#text');
-  var icon = document.querySelector('#icon');
-  var mobile = document.querySelector('#mobile');
-
-  var isMobileBrowser = browser.isMobile();
-  var browserName = browser.detect();
-  var mobileIcon = isMobileBrowser ? 'mobile' : 'desktop';
-
-  icon.style.width = '300px';
-  icon.style.height = '300px';
-  icon.src = './' + browserName + '.svg';
-
-  mobile.style.width = '200px';
-  mobile.style.height = '200px';
-  mobile.src = './' + mobileIcon + '.svg';
-</script>
 </html>
