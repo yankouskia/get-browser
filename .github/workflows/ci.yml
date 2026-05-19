@@ -26,15 +26,15 @@ jobs:
     steps:
       - name: Checkout
         # actions/checkout@v4.2.2
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Setup pnpm
         # pnpm/action-setup@v4.1.0
-        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda
+        uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093
 
       - name: Setup Node ${{ matrix.node }}
         # actions/setup-node@v4.4.0
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
         with:
           node-version: ${{ matrix.node }}
           cache: pnpm
@@ -73,9 +73,9 @@ jobs:
     name: Bundle size
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
         with:
           node-version: 22
           cache: pnpm
