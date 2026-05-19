@@ -1,0 +1,37 @@
+# Git hooks managed by Lefthook (https://lefthook.dev).
+# Install / refresh hooks with: pnpm exec lefthook install
+#
+# Hooks are skipped when CI=true so workflows control their own pipeline.
+
+skip_output:
+  - meta
+  - success
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: biome-check
+      glob: "*.{ts,tsx,js,cjs,mjs,json}"
+      run: pnpm exec biome check --write --no-errors-on-unmatched {staged_files}
+      stage_fixed: true
+
+    - name: typecheck
+      glob: "*.{ts,tsx}"
+      run: pnpm exec tsc --noEmit
+
+pre-push:
+  jobs:
+    - name: test
+      run: pnpm test
+
+commit-msg:
+  jobs:
+    - name: conventional-commits
+      # Allow standard conventional-commit prefixes plus a few non-standard ones
+      # this project uses (deps, build).
+      run: |
+        if ! grep -qE '^(feat|fix|chore|refactor|docs|test|ci|build|deps|perf|style|revert)(\([^)]+\))?!?: ' {1}; then
+          echo "❌ Commit message must follow Conventional Commits."
+          echo "   Examples: 'feat: ...', 'fix(scope): ...', 'refactor!: ...'"
+          exit 1
+        fi

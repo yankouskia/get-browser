@@ -4,13 +4,18 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@arethetypeswrong/core@0.17.4':
+    hash: nrkjanlrecwebenoug26uiawuq
+    path: patches/@arethetypeswrong__core@0.17.4.patch
+
 importers:
 
   .:
     devDependencies:
       '@arethetypeswrong/cli':
-        specifier: ^0.18.2
-        version: 0.18.2
+        specifier: ^0.17.4
+        version: 0.17.4
       '@biomejs/biome':
         specifier: ^2.4.15
         version: 2.4.15
@@ -62,14 +67,14 @@ packages:
   '@andrewbranch/untar.js@1.0.3':
     resolution: {integrity: sha512-Jh15/qVmrLGhkKJBdXlK1+9tY4lZruYjsgkDFj08ZmDiWVBLJcqkok7Z0/R0In+i1rScBpJlSvrTS2Lm41Pbnw==}
 
-  '@arethetypeswrong/cli@0.18.2':
-    resolution: {integrity: sha512-PcFM20JNlevEDKBg4Re29Rtv2xvjvQZzg7ENnrWFSS0PHgdP2njibVFw+dRUhNkPgNfac9iUqO0ohAXqQL4hbw==}
-    engines: {node: '>=20'}
+  '@arethetypeswrong/cli@0.17.4':
+    resolution: {integrity: sha512-AeiKxtf67XD/NdOqXgBOE5TZWH3EOCt+0GkbUpekOzngc+Q/cRZ5azjWyMxISxxfp0EItgm5NoSld9p7BAA5xQ==}
+    engines: {node: '>=18'}
     hasBin: true
 
-  '@arethetypeswrong/core@0.18.2':
-    resolution: {integrity: sha512-GiwTmBFOU1/+UVNqqCGzFJYfBXEytUkiI+iRZ6Qx7KmUVtLm00sYySkfe203C9QtPG11yOz1ZaMek8dT/xnlgg==}
-    engines: {node: '>=20'}
+  '@arethetypeswrong/core@0.17.4':
+    resolution: {integrity: sha512-Izvir8iIoU+X4SKtDAa5kpb+9cpifclzsbA8x/AZY0k0gIfXYQ1fa1B6Epfe6vNA2YfDX8VtrZFgvnXB6aPEoQ==}
+    engines: {node: '>=18'}
 
   '@babel/helper-string-parser@7.27.1':
     resolution: {integrity: sha512-qMlSxKbpRlAridDExk92nSobyDdpPijUq2DW6oDnUqd0iOGxmQjyqhMIihI9+zv4LPyZdRje2cavWPbCbWm3eA==}
@@ -1425,6 +1430,9 @@ packages:
   lodash.startcase@4.4.0:
     resolution: {integrity: sha512-+WKqsK294HMSc2jEbNgpHpd0JfIBhp7rEV4aqXWqFr6AlXov+SlcgB1Fv01y2kGe3Gc8nMW7VA0SrGuSkRfIEg==}
 
+  lru-cache@10.4.3:
+    resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
+
   lru-cache@11.4.0:
     resolution: {integrity: sha512-W+R+kFL4HgVxONq2bhXPi3bGpzGe/yEhVOp233qw9wCRtgncJ15P3bC+e4zZMu4Cq7d+WAJjXGW0uUkifhcatA==}
     engines: {node: 20 || >=22}
@@ -2000,9 +2008,9 @@ snapshots:
 
   '@andrewbranch/untar.js@1.0.3': {}
 
-  '@arethetypeswrong/cli@0.18.2':
+  '@arethetypeswrong/cli@0.17.4':
     dependencies:
-      '@arethetypeswrong/core': 0.18.2
+      '@arethetypeswrong/core': 0.17.4(patch_hash=nrkjanlrecwebenoug26uiawuq)
       chalk: 4.1.2
       cli-table3: 0.6.5
       commander: 10.0.1
@@ -2010,13 +2018,13 @@ snapshots:
       marked-terminal: 7.3.0(marked@9.1.6)
       semver: 7.8.0
 
-  '@arethetypeswrong/core@0.18.2':
+  '@arethetypeswrong/core@0.17.4(patch_hash=nrkjanlrecwebenoug26uiawuq)':
     dependencies:
       '@andrewbranch/untar.js': 1.0.3
       '@loaderkit/resolve': 1.0.6
       cjs-module-lexer: 1.4.3
       fflate: 0.8.3
-      lru-cache: 11.4.0
+      lru-cache: 10.4.3
       semver: 7.8.0
       typescript: 5.6.1-rc
       validate-npm-package-name: 5.0.1
@@ -3190,6 +3198,8 @@ snapshots:
       p-locate: 4.1.0
 
   lodash.startcase@4.4.0: {}
+
+  lru-cache@10.4.3: {}
 
   lru-cache@11.4.0: {}
 

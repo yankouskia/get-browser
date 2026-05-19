@@ -4,6 +4,33 @@ Lightweight ADRs for the v2 modernization. Most recent first.
 
 ---
 
+## ADR-007 — pnpm patch on `@arethetypeswrong/core` for Node 22+ compatibility
+
+**Context.** `attw --pack .` errored with
+`TypeError: Cannot read properties of undefined (reading 'filename')` against
+both the latest (0.18.2) and the prior major (0.17.4). Root cause: attw's
+`createPackage.js` invokes fflate's `Gunzip` streaming API but stores only the
+*last* emitted chunk (`unzipped = chunk` per callback). With fflate >= 0.8.3
+running on Node >= 22, gzip output is split into multiple chunks, so the
+untar input is truncated and `data[0]` is undefined.
+
+**Decision.** Apply a `pnpm patch` to accumulate every chunk into a single
+`Uint8Array` before handing it to `untar`. The patch is committed at
+`patches/@arethetypeswrong__core@0.17.4.patch` and wired up via
+`pnpm.patchedDependencies` in `package.json`.
+
+**Alternatives considered.**
+- *Drop attw from validation.* Rejected — the brief explicitly requires it and
+  it catches a class of `exports`-map bugs nothing else catches.
+- *Vendored validation script.* More code to maintain than a 6-line patch.
+- *Wait for upstream fix.* Not blocking; would leave CI broken indefinitely.
+
+**Consequences.** When the upstream fix lands (likely 0.18.3+), remove the
+patch and the override. The patch is small and self-contained, so the carry
+cost is minimal.
+
+---
+
 ## ADR-006 — Use `tsup` for the build
 
 **Context.** We need dual ESM + CJS emit with type declarations, source maps, and
