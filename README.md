@@ -8,7 +8,7 @@
 
 <p align="center">
   <strong>Tiny, typed, SSR-safe browser detection.</strong><br />
-  One call. One canonical answer. <strong>~1.5&nbsp;kB</strong> min+gzip. Zero dependencies.
+  One call. One canonical answer. <strong>~1&nbsp;kB</strong> min+gzip. Zero dependencies.
 </p>
 
 <p align="center">
@@ -55,7 +55,7 @@ No bundler? Drop in the UMD bundle:
 
 ## Why you'd use this
 
-- 🪶 **Tiny** — ~1.5 kB min+gzip, zero dependencies, tree-shakeable.
+- 🪶 **Tiny** — ~1 kB min+gzip, zero dependencies, tree-shakeable.
 - 🧠 **Typed** — `detect()` returns the `Browser` union, never `string`. Exhaustive switches compile.
 - 🏗️ **SSR-safe** — every detector takes `{ userAgent }`. Works in Node, Next.js, Remix, Astro, Workers, Deno.
 - 🎯 **Honest** — it answers *who*, not *what*. For capability checks use `@supports` / `matchMedia`.
@@ -134,7 +134,7 @@ If a future major bumps `Browser`, the compiler refuses to build. No silent drif
 
 ## API
 
-Eleven exports. That's all.
+Twelve exports. That's all.
 
 | | |
 | --- | --- |
@@ -152,7 +152,7 @@ Eleven exports. That's all.
 
 | Bundle (min+gz) | get-browser | detect-browser | bowser | ua-parser-js |
 | --- | :-: | :-: | :-: | :-: |
-| | 🏆 **~1.5 kB** | ~2 kB | ~7 kB | ~10 kB |
+| | 🏆 **~1 kB** | ~2 kB | ~7 kB | ~10 kB |
 
 Pick `ua-parser-js` if you need version numbers or device info. Pick `get-browser` if you just need the single, lowercase, typed answer to *which browser is this?* — see [the full comparison](https://yankouskia.github.io/get-browser/docs/comparison).
 

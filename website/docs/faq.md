@@ -46,7 +46,7 @@ No. If `navigator` isn't available (Node, Workers, Deno), every detector cleanly
 
 ## Why not just regex the UA myself?
 
-You can! The library is ~1.5 kB because the regexes aren't trivial — Chrome-on-Edge, Firefox-on-iOS, Safari-vs-CriOS, Opera Mini, and the long tail of mobile detection have edge cases that aren't obvious. We've debugged them so you don't have to.
+You can! The library is ~1 kB because the regexes aren't trivial — Chrome-on-Edge, Firefox-on-iOS, Safari-vs-CriOS, Opera Mini, and the long tail of mobile detection have edge cases that aren't obvious. We've debugged them so you don't have to.
 
 ## License?
 

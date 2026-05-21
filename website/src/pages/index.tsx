@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <Layout
       title="get-browser — tiny, typed, SSR-safe browser detection"
-      description="A ~1.5 kB TypeScript utility that returns a strict union for the current user-agent. Works in Node, Next.js, Remix, Workers, Deno, and the browser. Zero runtime dependencies."
+      description="A ~1 kB TypeScript utility that returns a strict union for the current user-agent. Works in Node, Next.js, Remix, Workers, Deno, and the browser. Zero runtime dependencies."
     >
       <Hero />
 

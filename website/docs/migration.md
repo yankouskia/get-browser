@@ -24,7 +24,7 @@ description: Breaking changes between get-browser 1.x and 2.x, and the steps to 
 | TypeScript minimum | 4.5 | 5.0 |
 | Types in dist | hand-rolled | generated, dual `.d.ts` + `.d.cts` |
 | `isMobile` regex | original detectmobilebrowsers.com | modernized; now correctly matches iPad in "Request Mobile Website" mode |
-| Bundle (min+gz) | ~3 kB | ~1.5 kB |
+| Bundle (min+gz) | ~3 kB | ~1 kB |
 
 ## Step 1: bump the dependency
 

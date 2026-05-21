@@ -1,7 +1,7 @@
 ---
 id: intro
 title: Introduction
-description: A tiny, SSR-safe TypeScript utility that tells you which browser is on the other end. Zero dependencies, ~1.5 kB.
+description: A tiny, SSR-safe TypeScript utility that tells you which browser is on the other end. Zero dependencies, ~1 kB.
 slug: /intro
 sidebar_position: 1
 ---
@@ -17,7 +17,7 @@ detect();                         // → 'chrome' | 'edge' | 'firefox' | ...
 detect() === browsers.SAFARI;     // → true on Safari (with the constant type-checked)
 ```
 
-That's the whole pitch. **~1.5 kB** min+gzip, zero dependencies, dual ESM + CJS, strict TypeScript types, and an SSR-safe API. It pairs `detect()` with a handful of single-purpose predicates (`isChrome`, `isMobile`, …) when all you want is a boolean.
+That's the whole pitch. **~1 kB** min+gzip, zero dependencies, dual ESM + CJS, strict TypeScript types, and an SSR-safe API. It pairs `detect()` with a handful of single-purpose predicates (`isChrome`, `isMobile`, …) when all you want is a boolean.
 
 ## Should I use this?
 
@@ -39,7 +39,7 @@ See [feature detection vs UA sniffing](/docs/guides/feature-vs-ua) for the longe
 
 ## What you get
 
-- **🪶 Tiny** — ~1.5 kB min+gzip, zero dependencies, fully tree-shakeable (single predicates ship at ~400 bytes).
+- **🪶 Tiny** — ~1 kB min+gzip, zero dependencies, fully tree-shakeable (single predicates ship at ~400 bytes).
 - **🧠 Typed** — `detect()` returns the `Browser` union, never plain `string`. Exhaustive `switch` statements compile.
 - **🏗️ SSR-safe** — every detector takes `{ userAgent, vendor }`. No `window` at import time. Works in Node, Next.js, Remix, Astro, Workers, Deno.
 - **📦 Dual ESM + CJS** — `import` and `require` both work, types ship for both. UMD bundle for `<script>` tags.

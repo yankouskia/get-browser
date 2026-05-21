@@ -16,7 +16,7 @@ import SizeChart from '@site/src/components/SizeChart';
 
 | | `get-browser` | [`ua-parser-js`](https://www.npmjs.com/package/ua-parser-js) | [`bowser`](https://www.npmjs.com/package/bowser) | [`detect-browser`](https://www.npmjs.com/package/detect-browser) |
 | --- | :-: | :-: | :-: | :-: |
-| Bundle (min+gz) | 🏆 **~1.5 kB** | ~10 kB | ~7 kB | ~2 kB |
+| Bundle (min+gz) | 🏆 **~1 kB** | ~10 kB | ~7 kB | ~2 kB |
 | Tree-shakes to single predicate | ✅ ~400 B | ❌ | ❌ | ❌ |
 | Dual ESM + CJS | ✅ | ✅ | ✅ | ⚠️ |
 | Strict union return type | ✅ | ❌ | ⚠️ | ⚠️ |
