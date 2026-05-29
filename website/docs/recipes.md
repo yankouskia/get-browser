@@ -61,6 +61,60 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   </TabItem>
 </Tabs>
 
+## Cross-platform UI
+
+### `⌘ K` on macOS, `Ctrl K` on Windows / Linux
+
+```tsx
+import { getOS, oses } from 'get-browser';
+
+export function CommandPaletteHint() {
+  const mod = getOS() === oses.MACOS ? '⌘' : 'Ctrl';
+  return <kbd>{mod} K</kbd>;
+}
+```
+
+### Download button — pick the right asset for the OS
+
+```tsx
+import { getOS, oses, type OS } from 'get-browser';
+
+const DOWNLOADS: Partial<Record<OS, { label: string; href: string }>> = {
+  [oses.WINDOWS]: { label: 'Download for Windows', href: '/dl/app.exe' },
+  [oses.MACOS]:   { label: 'Download for macOS',   href: '/dl/app.dmg' },
+  [oses.LINUX]:   { label: 'Download for Linux',   href: '/dl/app.deb' },
+  [oses.IOS]:     { label: 'Open in App Store',    href: 'https://apps.apple.com/…' },
+  [oses.ANDROID]: { label: 'Open in Play Store',   href: 'https://play.google.com/…' },
+};
+
+export function PrimaryCTA() {
+  const cta = DOWNLOADS[getOS()] ?? { label: 'Get the app', href: '/install' };
+  return <a href={cta.href} className="cta">{cta.label}</a>;
+}
+```
+
+### SSR — read `Sec-CH-UA-Platform` for the most reliable signal
+
+```ts title="middleware.ts (Next.js Edge)"
+import { NextResponse } from 'next/server';
+import { getOS } from 'get-browser';
+
+export function middleware(req: Request) {
+  const os = getOS({
+    userAgent: req.headers.get('user-agent') ?? '',
+    clientHints: {
+      platform: req.headers.get('sec-ch-ua-platform') ?? undefined,
+    },
+  });
+  // Stamp a header so downstream renderers can branch without re-detecting.
+  const res = NextResponse.next();
+  res.headers.set('x-detected-os', os);
+  return res;
+}
+```
+
+`Sec-CH-UA-Platform` is the only signal that *survives* Chromium's User-Agent Reduction — when it's available, prefer it.
+
 ## Store badges
 
 ### "Install for your browser" button

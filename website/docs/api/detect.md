@@ -16,7 +16,7 @@ import TabItem from '@theme/TabItem';
 | --- | --- |
 | **Signature** | `(options?: DetectOptions) => Browser` |
 | **Returns** | `'android' \| 'chrome' \| 'edge' \| 'firefox' \| 'ie' \| 'opera' \| 'safari' \| 'unknown'` |
-| **Bundle cost** | ~1 kB (full library, min+gz) |
+| **Bundle cost** | ~1.3 kB (full library, min+gz) |
 | **SSR safe** | ✅ Pass `{ userAgent }` to pin |
 
 ## Signature

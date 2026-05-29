@@ -16,6 +16,7 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       items: [
         'api/detect',
+        'api/get-os',
         'api/is-chrome',
         'api/is-edge',
         'api/is-firefox',

@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import {
   type Browser,
   detect,
+  getOS,
   isAndroid,
   isChrome,
   isEdge,
@@ -11,6 +12,7 @@ import {
   isMobile,
   isOpera,
   isSafari,
+  type OS,
 } from 'get-browser';
 import { useMemo, useState } from 'react';
 import styles from './styles.module.css';
@@ -48,6 +50,26 @@ const BROWSER_LABEL: Record<Browser, string> = {
   ie: 'Internet Explorer',
   android: 'Android WebView',
   unknown: 'Unknown / bot',
+};
+
+const OS_EMOJI: Record<OS, string> = {
+  macos: '🍎',
+  windows: '🪟',
+  linux: '🐧',
+  ios: '📱',
+  android: '🤖',
+  chromeos: '💻',
+  unknown: '❓',
+};
+
+const OS_LABEL: Record<OS, string> = {
+  macos: 'macOS',
+  windows: 'Windows',
+  linux: 'Linux',
+  ios: 'iOS / iPadOS',
+  android: 'Android',
+  chromeos: 'ChromeOS',
+  unknown: 'Unknown',
 };
 
 type Sample = { label: string; ua: string; tag?: string };
@@ -90,6 +112,16 @@ const SAMPLE_UAS: readonly Sample[] = [
     ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/117.0.0.0',
   },
   {
+    label: 'Chrome 140 · ChromeOS',
+    tag: 'chrome',
+    ua: 'Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
+  },
+  {
+    label: 'Firefox 138 · Linux',
+    tag: 'firefox',
+    ua: 'Mozilla/5.0 (X11; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0',
+  },
+  {
     label: 'IE 11 (legacy)',
     tag: 'ie',
     ua: 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
@@ -113,6 +145,7 @@ function DetectionCardInner() {
   // Empty UA = read from real navigator.
   const opts = activeUA ? { userAgent: activeUA } : undefined;
   const browser: Browser = detect(opts);
+  const os: OS = getOS(opts);
   const mobile = isMobile(opts);
 
   return (
@@ -146,6 +179,21 @@ function DetectionCardInner() {
         >
           {mobile ? '📱 mobile' : '🖥️ desktop'}
         </span>
+      </div>
+
+      <div className={styles.headerRow}>
+        <div className={styles.headerLeft}>
+          <span className={styles.emoji} aria-hidden="true">
+            {OS_EMOJI[os]}
+          </span>
+          <div>
+            <p className={styles.label}>getOS() →</p>
+            <p className={styles.value}>
+              <code>{`'${os}'`}</code>
+            </p>
+            <p className={styles.subValue}>{OS_LABEL[os]}</p>
+          </div>
+        </div>
       </div>
 
       <div className={styles.predicateGrid}>

@@ -4,9 +4,10 @@ import CodeBlock from '@theme/CodeBlock';
 import Layout from '@theme/Layout';
 import styles from './playground.module.css';
 
-const RECIPE = `import { detect, isMobile, browsers } from 'get-browser';
+const RECIPE = `import { detect, getOS, isMobile, browsers, oses } from 'get-browser';
 
 const browser = detect();
+const os      = getOS();
 
 switch (browser) {
   case browsers.CHROME:  loadChromeExtensionShim(); break;
@@ -14,6 +15,8 @@ switch (browser) {
   case browsers.FIREFOX: enableFirefoxOnlyFeature(); break;
   default:               /* nothing */              break;
 }
+
+const shortcut = os === oses.MACOS ? '⌘ K' : 'Ctrl K';
 
 if (isMobile()) document.body.classList.add('is-mobile');`;
 

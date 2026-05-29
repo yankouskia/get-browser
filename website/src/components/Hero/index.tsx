@@ -27,7 +27,7 @@ export default function Hero() {
         <div className={styles.heroLeft}>
           <Link to="/docs/migration" className={styles.eyebrow}>
             <span className={styles.eyebrowBadge}>v2</span>
-            <span>Now strict TypeScript, dual ESM + CJS, 1 kB</span>
+            <span>Now strict TypeScript, dual ESM + CJS, 1.3 kB</span>
             <span className={styles.eyebrowArrow}>→</span>
           </Link>
 
@@ -39,7 +39,7 @@ export default function Hero() {
 
           <p className={styles.subtitle}>
             <code>get-browser</code> answers <strong>which browser?</strong> with a strict
-            TypeScript union. <strong>1 kB</strong> min+gzip. <strong>Zero</strong> runtime
+            TypeScript union. <strong>1.3 kB</strong> min+gzip. <strong>Zero</strong> runtime
             dependencies. Works in Node, the browser, edge runtimes, Workers, Deno — same import,
             same call.
           </p>
@@ -69,7 +69,7 @@ export default function Hero() {
 
           <div className={styles.statRow}>
             <div className={styles.stat}>
-              <strong>~1 kB</strong>
+              <strong>~1.3 kB</strong>
               <span>min+gzip</span>
             </div>
             <div className={styles.stat}>

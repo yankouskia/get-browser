@@ -6,10 +6,10 @@ sidebar_label: Types
 
 # Types
 
-Type-only exports. Import with `import type` to make sure they're erased at runtime:
+Type-only exports. Use `import type` so they're erased at runtime:
 
 ```ts
-import { type Browser, type DetectOptions } from 'get-browser';
+import type { Browser, OS, DetectOptions, ClientHints } from 'get-browser';
 ```
 
 ## `Browser`
@@ -63,6 +63,23 @@ const engineOf = (b: Browser): Engine => {
 
 If a future major adds `'samsung'` to `Browser`, the `engineOf` switch breaks the build — exactly what you want.
 
+## `OS`
+
+```ts
+type OS =
+  | 'android'
+  | 'chromeos'
+  | 'ios'
+  | 'linux'
+  | 'macos'
+  | 'windows'
+  | 'unknown';
+```
+
+What [`getOS()`](./get-os) returns. Derived from [`oses`](./get-os#the-oses-enum) the same way `Browser` is derived from `browsers`.
+
+`'android'` overlaps with `Browser`'s `'android'` (Android *WebView*) — but they're never produced by the same call. Use the source of the value, not its string, to know which dimension you're looking at.
+
 ## `DetectOptions`
 
 ```ts
@@ -71,6 +88,8 @@ interface DetectOptions {
   readonly userAgent?: string;
   /** navigator.vendor-equivalent string. Falls back to navigator.vendor. */
   readonly vendor?: string;
+  /** Parsed User-Agent Client Hints. Consumed by getOS(); reserved for future use elsewhere. */
+  readonly clientHints?: ClientHints;
 }
 ```
 
@@ -92,7 +111,25 @@ isChrome({
 });
 ```
 
+## `ClientHints`
+
+```ts
+interface ClientHints {
+  /**
+   * Value of Sec-CH-UA-Platform. Quoted or unquoted; case-insensitive.
+   * One of: "macOS", "Windows", "Linux", "iOS", "Android", "Chrome OS",
+   * "Chromium OS". Anything else falls back to UA matching.
+   */
+  readonly platform?: string;
+}
+```
+
+Parsed [User-Agent Client Hints](https://wicg.github.io/ua-client-hints/). Today only [`getOS()`](./get-os) consumes this — it reads `platform` from the `Sec-CH-UA-Platform` request header. Other detectors will grow Client-Hint support over time without breaking changes.
+
+The headline reason to prefer hints: Chrome's [User-Agent Reduction](https://developer.chrome.com/docs/privacy-security/user-agent-reduction) is *removing* signal from the UA string. Hints are the long-term answer.
+
 ## See also
 
 - [`detect()`](./detect)
+- [`getOS()`](./get-os)
 - [`browsers`](./browsers)

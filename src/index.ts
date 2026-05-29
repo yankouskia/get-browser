@@ -7,17 +7,20 @@
  *
  * @example Quickstart
  * ```ts
- * import { detect, isMobile, browsers } from 'get-browser';
+ * import { detect, getOS, isMobile, browsers, oses } from 'get-browser';
  *
  * if (detect() === browsers.SAFARI && isMobile()) {
  *   applyMobileSafariFix();
  * }
+ *
+ * if (getOS() === oses.MACOS) showCmdKShortcut();
  * ```
  *
  * @packageDocumentation
  */
 
 export { detect } from './detect.js';
+export { getOS } from './get-os.js';
 export { isAndroid } from './is-android.js';
 export { isChrome } from './is-chrome.js';
 export { isEdge } from './is-edge.js';
@@ -26,4 +29,11 @@ export { isIE } from './is-ie.js';
 export { isMobile } from './is-mobile.js';
 export { isOpera } from './is-opera.js';
 export { isSafari } from './is-safari.js';
-export { type Browser, browsers, type DetectOptions } from './types.js';
+export {
+  type Browser,
+  browsers,
+  type ClientHints,
+  type DetectOptions,
+  type OS,
+  oses,
+} from './types.js';

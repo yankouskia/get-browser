@@ -8,7 +8,7 @@
 
 <p align="center">
   <strong>Tiny, typed, SSR-safe browser detection.</strong><br />
-  One call. One canonical answer. <strong>~1&nbsp;kB</strong> min+gzip. Zero dependencies.
+  One call. One canonical answer. <strong>~1.3&nbsp;kB</strong> min+gzip. Zero dependencies.
 </p>
 
 <p align="center">
@@ -29,14 +29,16 @@
 ---
 
 ```ts
-import { detect, isMobile, browsers } from 'get-browser';
+import { detect, getOS, isMobile, browsers, oses } from 'get-browser';
 
 if (detect() === browsers.SAFARI && isMobile()) {
   applyMobileSafariFix();
 }
+
+const shortcut = getOS() === oses.MACOS ? '⌘ K' : 'Ctrl K';
 ```
 
-That's the whole pitch. `detect()` returns a strict union — `'chrome' | 'edge' | 'firefox' | 'safari' | 'opera' | 'ie' | 'android' | 'unknown'` — and a handful of tree-shakeable predicates do the boolean version.
+That's the whole pitch. `detect()` returns a strict browser union — `'chrome' | 'edge' | 'firefox' | 'safari' | 'opera' | 'ie' | 'android' | 'unknown'`. `getOS()` returns a strict OS union — `'macos' | 'windows' | 'linux' | 'ios' | 'android' | 'chromeos' | 'unknown'`. A handful of tree-shakeable predicates do the boolean versions.
 
 ## Install
 
@@ -55,7 +57,7 @@ No bundler? Drop in the UMD bundle:
 
 ## Why you'd use this
 
-- 🪶 **Tiny** — ~1 kB min+gzip, zero dependencies, tree-shakeable.
+- 🪶 **Tiny** — ~1.3 kB min+gzip, zero dependencies, tree-shakeable.
 - 🧠 **Typed** — `detect()` returns the `Browser` union, never `string`. Exhaustive switches compile.
 - 🏗️ **SSR-safe** — every detector takes `{ userAgent }`. Works in Node, Next.js, Remix, Astro, Workers, Deno.
 - 🎯 **Honest** — it answers *who*, not *what*. For capability checks use `@supports` / `matchMedia`.
@@ -100,15 +102,43 @@ if (isSafari() && isMobile()) applyMobileSafariFix();
 // Next.js Edge route — runs on Cloudflare too
 export const runtime = 'edge';
 
-import { detect } from 'get-browser';
+import { detect, getOS } from 'get-browser';
 
 export function GET(req: Request) {
   const userAgent = req.headers.get('user-agent') ?? '';
-  return Response.json({ browser: detect({ userAgent }) });
+  return Response.json({
+    browser: detect({ userAgent }),
+    // Prefer Sec-CH-UA-Platform — Chrome's UA Reduction is hollowing
+    // out the legacy UA string. Get-browser reads either.
+    os: getOS({
+      userAgent,
+      clientHints: { platform: req.headers.get('sec-ch-ua-platform') ?? undefined },
+    }),
+  });
 }
 ```
 
 The library never touches `window` at import time. Pass an explicit UA and detection becomes a pure function — perfect for tests and SSR. Full framework cookbook in the [SSR guide](https://yankouskia.github.io/get-browser/docs/guides/ssr).
+
+</details>
+
+<details>
+<summary><strong>Cross-platform UI — shortcuts, downloads, deep links</strong></summary>
+
+```ts
+import { getOS, oses } from 'get-browser';
+
+const os = getOS();
+
+const shortcut    = os === oses.MACOS ? '⌘ K' : 'Ctrl K';
+const downloadUrl = os === oses.WINDOWS ? '/dl/app.exe'
+                  : os === oses.MACOS   ? '/dl/app.dmg'
+                  : os === oses.LINUX   ? '/dl/app.deb'
+                  : '/dl/';
+const storeUrl    = os === oses.IOS     ? 'https://apps.apple.com/…'
+                  : os === oses.ANDROID ? 'https://play.google.com/…'
+                  : '/install';
+```
 
 </details>
 
@@ -134,17 +164,18 @@ If a future major bumps `Browser`, the compiler refuses to build. No silent drif
 
 ## API
 
-Twelve exports. That's all.
+A small surface — every export pulls its weight.
 
 | | |
 | --- | --- |
 | `detect(opts?)` | Returns one of the [`browsers`](https://yankouskia.github.io/get-browser/docs/api/browsers) values |
+| `getOS(opts?)` | Returns one of the [`oses`](https://yankouskia.github.io/get-browser/docs/api/get-os) values |
 | `isChrome / isEdge / isFirefox / isSafari` | `(opts?) => boolean` |
 | `isOpera / isIE / isAndroid / isMobile` | `(opts?) => boolean` |
-| `browsers` | Frozen enum: `{ CHROME: 'chrome', ... }` |
-| `Browser`, `DetectOptions` | Type-only exports |
+| `browsers`, `oses` | Frozen enums: `{ CHROME: 'chrome', ... }`, `{ MACOS: 'macos', ... }` |
+| `Browser`, `OS`, `DetectOptions`, `ClientHints` | Type-only exports |
 
-`opts` is `{ userAgent?: string; vendor?: string }` — pass it for SSR or tests, leave it for client-side use.
+`opts` is `{ userAgent?: string; vendor?: string; clientHints?: { platform?: string } }` — pass `userAgent` for SSR or tests, pass `clientHints.platform` (the `Sec-CH-UA-Platform` header) for the most reliable OS read.
 
 **[Full API reference →](https://yankouskia.github.io/get-browser/docs/api/detect)**
 
@@ -152,7 +183,7 @@ Twelve exports. That's all.
 
 | Bundle (min+gz) | get-browser | detect-browser | bowser | ua-parser-js |
 | --- | :-: | :-: | :-: | :-: |
-| | 🏆 **~1 kB** | ~2 kB | ~7 kB | ~10 kB |
+| | 🏆 **~1.3 kB** | ~2 kB | ~7 kB | ~10 kB |
 
 Pick `ua-parser-js` if you need version numbers or device info. Pick `get-browser` if you just need the single, lowercase, typed answer to *which browser is this?* — see [the full comparison](https://yankouskia.github.io/get-browser/docs/comparison).
 

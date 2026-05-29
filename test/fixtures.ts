@@ -111,9 +111,31 @@ export const UA = {
   opera2026Desktop:
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/117.0.0.0',
 
+  // ChromeOS — emitted by Chrome on Chromebooks. The `CrOS` token is what
+  // separates a Chromebook UA from a Linux UA.
+  chromeOSDesktop:
+    'Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
+
   // Sentinels
   empty: '',
   unknown: 'SomeBot/1.0 (+https://example.test)',
+} as const;
+
+/**
+ * Canonical `Sec-CH-UA-Platform` header values per the spec.
+ * https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform
+ *
+ * The raw header is a structured-string, so values arrive double-quoted.
+ */
+export const CH_PLATFORM = {
+  macOS: '"macOS"',
+  windows: '"Windows"',
+  linux: '"Linux"',
+  iOS: '"iOS"',
+  android: '"Android"',
+  chromeOS: '"Chrome OS"',
+  unquoted: 'macOS', // tolerated form
+  empty: '',
 } as const;
 
 export const VENDOR = {
