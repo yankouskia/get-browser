@@ -4,7 +4,10 @@ import CodeBlock from '@theme/CodeBlock';
 import Layout from '@theme/Layout';
 import styles from './playground.module.css';
 
-const RECIPE = `import { detect, getOS, isMobile, browsers, oses } from 'get-browser';
+const RECIPE = `import {
+  detect, getOS, isMobile, isInAppBrowser,
+  browsers, oses,
+} from 'get-browser';
 
 const browser = detect();
 const os      = getOS();
@@ -18,7 +21,8 @@ switch (browser) {
 
 const shortcut = os === oses.MACOS ? '⌘ K' : 'Ctrl K';
 
-if (isMobile()) document.body.classList.add('is-mobile');`;
+if (isMobile())        document.body.classList.add('is-mobile');
+if (isInAppBrowser())  showOpenInBrowserHint(); // OAuth won't work here`;
 
 export default function Playground() {
   return (

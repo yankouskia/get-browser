@@ -25,6 +25,7 @@ const sidebars: SidebarsConfig = {
         'api/is-ie',
         'api/is-android',
         'api/is-mobile',
+        'api/is-in-app-browser',
         'api/browsers',
         'api/types',
       ],

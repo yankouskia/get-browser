@@ -8,6 +8,7 @@ import {
   detect,
   getOS,
   isChrome,
+  isInAppBrowser,
   isMobile,
   type OS,
   oses,
@@ -28,6 +29,8 @@ describe('public types', () => {
     expectTypeOf(isChrome).parameters.toEqualTypeOf<[options?: DetectOptions]>();
     expectTypeOf(isChrome).returns.toBeBoolean();
     expectTypeOf(isMobile).returns.toBeBoolean();
+    expectTypeOf(isInAppBrowser).parameters.toEqualTypeOf<[options?: DetectOptions]>();
+    expectTypeOf(isInAppBrowser).returns.toBeBoolean();
   });
 
   it('getOS() takes the same DetectOptions shape as the predicates', () => {

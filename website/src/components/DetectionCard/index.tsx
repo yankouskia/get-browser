@@ -9,6 +9,7 @@ import {
   isEdge,
   isFirefox,
   isIE,
+  isInAppBrowser,
   isMobile,
   isOpera,
   isSafari,
@@ -28,6 +29,7 @@ const PREDICATES: readonly PredicateRow[] = [
   ['isIE', isIE],
   ['isAndroid', isAndroid],
   ['isMobile', isMobile],
+  ['isInAppBrowser', isInAppBrowser],
 ];
 
 const BROWSER_EMOJI: Record<Browser, string> = {
@@ -115,6 +117,21 @@ const SAMPLE_UAS: readonly Sample[] = [
     label: 'Chrome 140 · ChromeOS',
     tag: 'chrome',
     ua: 'Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
+  },
+  {
+    label: '📸 Instagram in-app · iOS',
+    tag: 'safari',
+    ua: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 332.0.0.16.110 (iPhone16,2; iOS 17_5_1; en_US; en-US; scale=3.00; 1290x2796; 597594040)',
+  },
+  {
+    label: '👤 Facebook in-app · iOS',
+    tag: 'safari',
+    ua: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 [FBAN/FBIOS;FBAV/451.0.0.34.108;FBBV/525876316]',
+  },
+  {
+    label: '🎵 TikTok in-app · iOS',
+    tag: 'safari',
+    ua: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 TikTok/34.6.0',
   },
   {
     label: 'Firefox 138 · Linux',

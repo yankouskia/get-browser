@@ -26,6 +26,7 @@ export { isChrome } from './is-chrome.js';
 export { isEdge } from './is-edge.js';
 export { isFirefox } from './is-firefox.js';
 export { isIE } from './is-ie.js';
+export { isInAppBrowser } from './is-in-app-browser.js';
 export { isMobile } from './is-mobile.js';
 export { isOpera } from './is-opera.js';
 export { isSafari } from './is-safari.js';

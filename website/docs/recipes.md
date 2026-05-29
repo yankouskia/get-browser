@@ -210,24 +210,61 @@ export function polyfillsFor(userAgent: string): string[] {
 
 ## In-app browsers
 
-### Detect Facebook / Instagram / Line / Twitter / TikTok WebViews
+### Bounce users out before OAuth
+
+Google, Apple, and Microsoft block sign-in inside in-app browsers. Detect the situation up front and hand the user back to the system browser:
 
 ```ts
-import { isAndroid, isMobile } from 'get-browser';
+import { isInAppBrowser } from 'get-browser';
 
-export function isInAppBrowser(userAgent = navigator.userAgent): boolean {
-  return (
-    isMobile({ userAgent }) &&
-    /\b(FBAN|FBAV|Instagram|Line|Snapchat|TikTok|WeChat|MicroMessenger|Twitter)\b/i.test(userAgent)
-  );
-}
-
-if (isInAppBrowser()) {
-  // Some APIs misbehave inside WebViews — e.g. external OAuth redirects
-  // get stuck. Show a "Open in browser" hint.
-  showOpenInBrowserHint();
+export function SignInButton() {
+  if (isInAppBrowser()) {
+    return (
+      <a href="/auth/oauth-bounce" className="cta">
+        Tap to continue with Google
+        <small>opens in your browser</small>
+      </a>
+    );
+  }
+  return <button onClick={startOAuth}>Sign in with Google</button>;
 }
 ```
+
+The library ships [`isInAppBrowser()`](./api/is-in-app-browser) — no need to roll your own regex. It detects Instagram, Facebook (`FBAN`/`FBAV`/`FB_IAB`), TikTok (`TikTok`, `musical_ly`), X / Twitter, LinkedIn, Snapchat, WeChat (`MicroMessenger`), Line, Telegram, and Pinterest.
+
+### App-specific copy
+
+The boolean is usually enough, but if you want different microcopy per app:
+
+```ts
+import { isInAppBrowser } from 'get-browser';
+
+function inAppHint(ua = navigator.userAgent): string | null {
+  if (!isInAppBrowser({ userAgent: ua })) return null;
+  if (/\bInstagram\b/.test(ua))      return 'Tap ⋯ → "Open in browser"';
+  if (/\bFB(?:AN|AV|_IAB)\b/.test(ua)) return 'Tap ⋯ → "Open in browser"';
+  if (/\bTikTok\b/.test(ua))           return 'Tap "Open in browser"';
+  return 'Open in your browser to continue';
+}
+```
+
+### SSR — annotate analytics events
+
+```ts title="middleware.ts (Next.js Edge)"
+import { NextResponse } from 'next/server';
+import { isInAppBrowser } from 'get-browser';
+
+export function middleware(req: Request) {
+  const res = NextResponse.next();
+  res.headers.set(
+    'x-in-app',
+    isInAppBrowser({ userAgent: req.headers.get('user-agent') ?? '' }) ? '1' : '0',
+  );
+  return res;
+}
+```
+
+Once `x-in-app` is on every event, funnels finally separate Instagram-traffic from Safari-traffic — without it the two are indistinguishable and conversion rates lie.
 
 ## Mobile-Safari viewport
 

@@ -8,7 +8,7 @@
 
 <p align="center">
   <strong>Tiny, typed, SSR-safe browser detection.</strong><br />
-  One call. One canonical answer. <strong>~1.3&nbsp;kB</strong> min+gzip. Zero dependencies.
+  One call. One canonical answer. <strong>~1.4&nbsp;kB</strong> min+gzip. Zero dependencies.
 </p>
 
 <p align="center">
@@ -57,7 +57,7 @@ No bundler? Drop in the UMD bundle:
 
 ## Why you'd use this
 
-- 🪶 **Tiny** — ~1.3 kB min+gzip, zero dependencies, tree-shakeable.
+- 🪶 **Tiny** — ~1.4 kB min+gzip, zero dependencies, tree-shakeable.
 - 🧠 **Typed** — `detect()` returns the `Browser` union, never `string`. Exhaustive switches compile.
 - 🏗️ **SSR-safe** — every detector takes `{ userAgent }`. Works in Node, Next.js, Remix, Astro, Workers, Deno.
 - 🎯 **Honest** — it answers *who*, not *what*. For capability checks use `@supports` / `matchMedia`.
@@ -143,6 +143,25 @@ const storeUrl    = os === oses.IOS     ? 'https://apps.apple.com/…'
 </details>
 
 <details>
+<summary><strong>In-app browsers — Instagram, Facebook, TikTok, X, LinkedIn, …</strong></summary>
+
+```ts
+import { isInAppBrowser } from 'get-browser';
+
+// OAuth providers (Google, Apple, Microsoft) block sign-in inside
+// most in-app browsers. Bounce to the system browser first.
+if (isInAppBrowser()) {
+  showOpenInBrowserBanner({
+    message: 'Tap ⋯ → "Open in browser" to continue with Google sign-in.',
+  });
+}
+```
+
+Catches Facebook (`FBAN`/`FBAV`/`FB_IAB`), Instagram, X/Twitter, LinkedIn, TikTok, Snapchat, WeChat, Line, Telegram, Pinterest. Stable token-based matching — version-agnostic.
+
+</details>
+
+<details>
 <summary><strong>Type-safe analytics tagging</strong></summary>
 
 ```ts
@@ -172,6 +191,7 @@ A small surface — every export pulls its weight.
 | `getOS(opts?)` | Returns one of the [`oses`](https://yankouskia.github.io/get-browser/docs/api/get-os) values |
 | `isChrome / isEdge / isFirefox / isSafari` | `(opts?) => boolean` |
 | `isOpera / isIE / isAndroid / isMobile` | `(opts?) => boolean` |
+| `isInAppBrowser` | `(opts?) => boolean` — `true` inside Instagram, Facebook, TikTok, X, LinkedIn, … |
 | `browsers`, `oses` | Frozen enums: `{ CHROME: 'chrome', ... }`, `{ MACOS: 'macos', ... }` |
 | `Browser`, `OS`, `DetectOptions`, `ClientHints` | Type-only exports |
 
@@ -183,7 +203,7 @@ A small surface — every export pulls its weight.
 
 | Bundle (min+gz) | get-browser | detect-browser | bowser | ua-parser-js |
 | --- | :-: | :-: | :-: | :-: |
-| | 🏆 **~1.3 kB** | ~2 kB | ~7 kB | ~10 kB |
+| | 🏆 **~1.4 kB** | ~2 kB | ~7 kB | ~10 kB |
 
 Pick `ua-parser-js` if you need version numbers or device info. Pick `get-browser` if you just need the single, lowercase, typed answer to *which browser is this?* — see [the full comparison](https://yankouskia.github.io/get-browser/docs/comparison).
 

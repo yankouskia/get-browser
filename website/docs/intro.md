@@ -1,7 +1,7 @@
 ---
 id: intro
 title: Introduction
-description: A tiny, SSR-safe TypeScript utility that tells you which browser is on the other end. Zero dependencies, ~1.3 kB.
+description: A tiny, SSR-safe TypeScript utility that tells you which browser is on the other end. Zero dependencies, ~1.4 kB.
 slug: /intro
 sidebar_position: 1
 ---
@@ -20,7 +20,7 @@ detect() === browsers.SAFARI;     // → true on Safari (with the constant type-
 getOS()   === oses.MACOS;         // → true on macOS — show ⌘ K instead of Ctrl K
 ```
 
-That's the whole pitch. **~1.3 kB** min+gzip, zero dependencies, dual ESM + CJS, strict TypeScript types, and an SSR-safe API. It pairs `detect()` and `getOS()` with a handful of single-purpose predicates (`isChrome`, `isMobile`, …) when all you want is a boolean.
+That's the whole pitch. **~1.4 kB** min+gzip, zero dependencies, dual ESM + CJS, strict TypeScript types, and an SSR-safe API. It pairs `detect()` and `getOS()` with a handful of single-purpose predicates (`isChrome`, `isMobile`, …) when all you want is a boolean.
 
 ## Should I use this?
 
@@ -32,6 +32,7 @@ That's the whole pitch. **~1.3 kB** min+gzip, zero dependencies, dual ESM + CJS,
 - 🖼️ Rendering a "Download for your browser" / "Download for your OS" badge
 - ⌘ Picking the right keyboard shortcut for the current OS
 - 🛍️ Linking to the right App Store / Play Store
+- 🚪 Bouncing users out of Instagram / TikTok / Facebook in-app browsers before OAuth
 - 🏗️ Server-side branching on the request `User-Agent` header or `Sec-CH-UA-Platform`
 
 **No** if you need:
@@ -44,7 +45,7 @@ See [feature detection vs UA sniffing](/docs/guides/feature-vs-ua) for the longe
 
 ## What you get
 
-- **🪶 Tiny** — ~1.3 kB min+gzip, zero dependencies, fully tree-shakeable (single predicates ship at ~400 bytes).
+- **🪶 Tiny** — ~1.4 kB min+gzip, zero dependencies, fully tree-shakeable (single predicates ship at ~400 bytes).
 - **🧠 Typed** — `detect()` returns the `Browser` union, never plain `string`. Exhaustive `switch` statements compile.
 - **🏗️ SSR-safe** — every detector takes `{ userAgent, vendor }`. No `window` at import time. Works in Node, Next.js, Remix, Astro, Workers, Deno.
 - **📦 Dual ESM + CJS** — `import` and `require` both work, types ship for both. UMD bundle for `<script>` tags.
