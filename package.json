@@ -1,6 +1,6 @@
 {
   "name": "get-browser",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Lightweight, SSR-safe browser detection — strict TypeScript types, dual ESM + CJS, zero runtime dependencies.",
   "keywords": [
     "browser",
