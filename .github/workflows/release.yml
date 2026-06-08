@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Checkout
         # actions/checkout@v4.2.2
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
         with:
           fetch-depth: 0
 
@@ -45,7 +45,7 @@ jobs:
 
       - name: Create release PR or publish
         # changesets/action@v1.5.3
-        uses: changesets/action@63a615b9cd06ba9a3e6d13796c7fbcb080a60a0b
+        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d
         with:
           publish: pnpm exec changeset publish
           version: pnpm exec changeset version
