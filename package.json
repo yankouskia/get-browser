@@ -142,6 +142,9 @@
     }
   ],
   "pnpm": {
+    "overrides": {
+      "esbuild@<0.28.1": ">=0.28.1"
+    },
     "patchedDependencies": {
       "@arethetypeswrong/core@0.17.4": "patches/@arethetypeswrong__core@0.17.4.patch"
     }
