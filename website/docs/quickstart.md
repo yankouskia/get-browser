@@ -77,29 +77,33 @@ If you’re not using a bundler:
 </script>
 ```
 
-## Type-driven analytics tagging
+## Type-driven tagging
 
-`Browser` is a closed union, so analytics shimming gets free exhaustiveness checking:
+`Browser` is a closed union, so a lookup table gets free exhaustiveness checking:
 
 ```ts
 import { type Browser, detect } from 'get-browser';
 
-const tagBrowser = (browser: Browser): string =>
+const vendorOf = (browser: Browser): string =>
   ({
-    chrome:  'chromium',
-    edge:    'chromium',
-    opera:   'chromium',
-    safari:  'webkit',
-    firefox: 'gecko',
-    ie:      'trident',
-    android: 'legacy-webkit',
-    unknown: 'unknown',
+    chrome:  'Google',
+    android: 'Google',
+    edge:    'Microsoft',
+    ie:      'Microsoft',
+    firefox: 'Mozilla',
+    safari:  'Apple',
+    opera:   'Opera',
+    unknown: 'Unknown',
   })[browser];
 
-analytics.track('page_view', { engine: tagBrowser(detect()) });
+analytics.track('page_view', { vendor: vendorOf(detect()) });
 ```
 
 If a future major bumps `Browser`, the compiler flags the unhandled key. No `default:` needed.
+
+:::tip Tagging the rendering engine?
+Don't map `browser → engine` by hand — it's **wrong on iOS** (Chrome-iOS renders with WebKit, not Blink). Call [`getEngine()`](/docs/api/get-engine), which reads the platform from the UA: `analytics.track('page_view', { engine: getEngine() })`.
+:::
 
 ## Next
 

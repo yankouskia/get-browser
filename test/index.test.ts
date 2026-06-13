@@ -7,6 +7,8 @@ describe('public API surface', () => {
     expect(exports).toEqual([
       'browsers',
       'detect',
+      'engines',
+      'getEngine',
       'getOS',
       'isAndroid',
       'isChrome',
@@ -41,5 +43,10 @@ describe('public API surface', () => {
   it('getOS returns one of the canonical OS strings', () => {
     const result = api.getOS({ userAgent: '' });
     expect(Object.values(api.oses)).toContain(result);
+  });
+
+  it('getEngine returns one of the canonical engine strings', () => {
+    const result = api.getEngine({ userAgent: '' });
+    expect(Object.values(api.engines)).toContain(result);
   });
 });

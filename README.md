@@ -29,16 +29,23 @@
 ---
 
 ```ts
-import { detect, getOS, isMobile, browsers, oses } from 'get-browser';
+import { detect, getEngine, getOS, isMobile, browsers, engines, oses } from 'get-browser';
 
 if (detect() === browsers.SAFARI && isMobile()) {
   applyMobileSafariFix();
 }
 
+if (getEngine() === engines.WEBKIT) applyWebkitScrollFix(); // also catches Chrome-iOS
 const shortcut = getOS() === oses.MACOS ? '⌘ K' : 'Ctrl K';
 ```
 
-That's the whole pitch. `detect()` returns a strict browser union — `'chrome' | 'edge' | 'firefox' | 'safari' | 'opera' | 'ie' | 'android' | 'unknown'`. `getOS()` returns a strict OS union — `'macos' | 'windows' | 'linux' | 'ios' | 'android' | 'chromeos' | 'unknown'`. A handful of tree-shakeable predicates do the boolean versions.
+That's the whole pitch. Three canonical questions, three strict unions:
+
+- `detect()` → `'chrome' | 'edge' | 'firefox' | 'safari' | 'opera' | 'ie' | 'android' | 'unknown'` — *who*.
+- `getEngine()` → `'blink' | 'gecko' | 'webkit' | 'trident' | 'presto' | 'edgehtml' | 'unknown'` — *what renders it* (correct on iOS).
+- `getOS()` → `'macos' | 'windows' | 'linux' | 'ios' | 'android' | 'chromeos' | 'unknown'` — *where it runs*.
+
+A handful of tree-shakeable predicates do the boolean versions.
 
 ## Install
 
@@ -162,22 +169,19 @@ Catches Facebook (`FBAN`/`FBAV`/`FB_IAB`), Instagram, X/Twitter, LinkedIn, TikTo
 </details>
 
 <details>
-<summary><strong>Type-safe analytics tagging</strong></summary>
+<summary><strong>Rendering engine — correct on iOS, where everything is WebKit</strong></summary>
 
 ```ts
-import { type Browser, detect } from 'get-browser';
+import { detect, getEngine, engines } from 'get-browser';
 
-const engineOf = (b: Browser) =>
-  ({
-    chrome: 'chromium', edge: 'chromium', opera: 'chromium',
-    firefox: 'gecko',   safari: 'webkit', ie: 'trident',
-    android: 'legacy-webkit', unknown: 'unknown',
-  } as const)[b];
+// One check covers Safari + Chrome-iOS + Firefox-iOS + Edge-iOS.
+if (getEngine() === engines.WEBKIT) applyWebkitScrollFix();
 
-analytics.track('page_view', { engine: engineOf(detect()) });
+// Honest analytics: "who" and "what renders it" are different questions.
+analytics.track('page_view', { browser: detect(), engine: getEngine() });
 ```
 
-If a future major bumps `Browser`, the compiler refuses to build. No silent drift.
+`getEngine()` reads the engine from the UA, so Chrome-on-iOS reports `'webkit'` (what actually paints the page) — not `'blink'`. A hand-rolled `browser → engine` lookup gets that wrong.
 
 </details>
 
@@ -188,12 +192,13 @@ A small surface — every export pulls its weight.
 | | |
 | --- | --- |
 | `detect(opts?)` | Returns one of the [`browsers`](https://yankouskia.github.io/get-browser/docs/api/browsers) values |
+| `getEngine(opts?)` | Returns one of the [`engines`](https://yankouskia.github.io/get-browser/docs/api/get-engine) values |
 | `getOS(opts?)` | Returns one of the [`oses`](https://yankouskia.github.io/get-browser/docs/api/get-os) values |
 | `isChrome / isEdge / isFirefox / isSafari` | `(opts?) => boolean` |
 | `isOpera / isIE / isAndroid / isMobile` | `(opts?) => boolean` |
 | `isInAppBrowser` | `(opts?) => boolean` — `true` inside Instagram, Facebook, TikTok, X, LinkedIn, … |
-| `browsers`, `oses` | Frozen enums: `{ CHROME: 'chrome', ... }`, `{ MACOS: 'macos', ... }` |
-| `Browser`, `OS`, `DetectOptions`, `ClientHints` | Type-only exports |
+| `browsers`, `oses`, `engines` | Frozen enums: `{ CHROME: 'chrome', ... }`, `{ MACOS: 'macos', ... }`, `{ WEBKIT: 'webkit', ... }` |
+| `Browser`, `OS`, `Engine`, `DetectOptions`, `ClientHints` | Type-only exports |
 
 `opts` is `{ userAgent?: string; vendor?: string; clientHints?: { platform?: string } }` — pass `userAgent` for SSR or tests, pass `clientHints.platform` (the `Sec-CH-UA-Platform` header) for the most reliable OS read.
 

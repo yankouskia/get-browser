@@ -6,6 +6,9 @@ import {
   type ClientHints,
   type DetectOptions,
   detect,
+  type Engine,
+  engines,
+  getEngine,
   getOS,
   isChrome,
   isInAppBrowser,
@@ -25,6 +28,11 @@ describe('public types', () => {
     expectTypeOf<OS>().not.toEqualTypeOf<string>();
   });
 
+  it('getEngine() returns the Engine union, never plain string', () => {
+    expectTypeOf(getEngine()).toEqualTypeOf<Engine>();
+    expectTypeOf<Engine>().not.toEqualTypeOf<string>();
+  });
+
   it('every predicate has signature (options?: DetectOptions) => boolean', () => {
     expectTypeOf(isChrome).parameters.toEqualTypeOf<[options?: DetectOptions]>();
     expectTypeOf(isChrome).returns.toBeBoolean();
@@ -35,6 +43,10 @@ describe('public types', () => {
 
   it('getOS() takes the same DetectOptions shape as the predicates', () => {
     expectTypeOf(getOS).parameters.toEqualTypeOf<[options?: DetectOptions]>();
+  });
+
+  it('getEngine() takes the same DetectOptions shape as the predicates', () => {
+    expectTypeOf(getEngine).parameters.toEqualTypeOf<[options?: DetectOptions]>();
   });
 
   it('Browser is the exact union of the browsers values', () => {
@@ -53,6 +65,11 @@ describe('public types', () => {
   it('OS is the exact union of the oses values', () => {
     type Expected = 'android' | 'chromeos' | 'ios' | 'linux' | 'macos' | 'windows' | 'unknown';
     expectTypeOf<OS>().toEqualTypeOf<Expected>();
+  });
+
+  it('Engine is the exact union of the engines values', () => {
+    type Expected = 'blink' | 'edgehtml' | 'gecko' | 'presto' | 'trident' | 'webkit' | 'unknown';
+    expectTypeOf<Engine>().toEqualTypeOf<Expected>();
   });
 
   it('browsers object is readonly at the type level', () => {
@@ -76,6 +93,18 @@ describe('public types', () => {
       readonly LINUX: 'linux';
       readonly MACOS: 'macos';
       readonly WINDOWS: 'windows';
+      readonly UNKNOWN: 'unknown';
+    }>();
+  });
+
+  it('engines object is readonly at the type level', () => {
+    expectTypeOf(engines).toEqualTypeOf<{
+      readonly BLINK: 'blink';
+      readonly EDGEHTML: 'edgehtml';
+      readonly GECKO: 'gecko';
+      readonly PRESTO: 'presto';
+      readonly TRIDENT: 'trident';
+      readonly WEBKIT: 'webkit';
       readonly UNKNOWN: 'unknown';
     }>();
   });

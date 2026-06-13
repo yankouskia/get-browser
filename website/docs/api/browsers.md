@@ -44,20 +44,23 @@ if (browser === browsers.SAFARI) {
   patchSafariScrollBug();
 }
 
-// Or as a switch
+// Or as a switch — the compiler enforces every case is handled
 switch (browser) {
-  case browsers.CHROME:  return 'chromium';
-  case browsers.EDGE:    return 'chromium';
-  case browsers.FIREFOX: return 'gecko';
-  case browsers.SAFARI:  return 'webkit';
-  case browsers.OPERA:   return 'chromium';
-  case browsers.IE:      return 'trident';
-  case browsers.ANDROID: return 'legacy-webkit';
-  case browsers.UNKNOWN: return 'unknown';
+  case browsers.CHROME:  return 'Google';
+  case browsers.ANDROID: return 'Google';
+  case browsers.EDGE:    return 'Microsoft';
+  case browsers.IE:      return 'Microsoft';
+  case browsers.FIREFOX: return 'Mozilla';
+  case browsers.SAFARI:  return 'Apple';
+  case browsers.OPERA:   return 'Opera';
+  case browsers.UNKNOWN: return 'Unknown';
 }
 ```
+
+> Mapping to the **rendering engine** instead? Don't switch on the browser — that's wrong on iOS. Use [`getEngine()`](./get-engine).
 
 ## See also
 
 - [`Browser`](./types#browser) — the union type derived from these values.
 - [`detect()`](./detect)
+- [`getEngine()`](./get-engine) — the rendering engine, the honest way.

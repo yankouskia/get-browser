@@ -64,24 +64,22 @@ export function GET(req: Request) {
     output: `{ "browser": "chrome" }`,
   },
   {
-    id: 'analytics',
-    label: 'analytics',
-    icon: '📊',
+    id: 'engine',
+    label: 'engine',
+    icon: '🎨',
     filename: 'tracker.ts',
-    code: `import { type Browser, detect } from 'get-browser';
+    code: `import { detect, getEngine, engines } from 'get-browser';
 
-const engineOf = (b: Browser) =>
-  ({
-    chrome: 'chromium', edge: 'chromium', opera: 'chromium',
-    firefox: 'gecko',   safari: 'webkit',
-    ie: 'trident',      android: 'legacy-webkit',
-    unknown: 'unknown',
-  } as const)[b];
+// One check covers Safari AND every browser on iOS.
+if (getEngine() === engines.WEBKIT) {
+  applyWebkitScrollFix();
+}
 
 analytics.track('page_view', {
-  engine: engineOf(detect()),
+  browser: detect(),     // 'chrome'  — the brand
+  engine: getEngine(),   // 'webkit'  — what actually renders
 });`,
-    output: `track: { engine: 'chromium' }`,
+    output: `track: { browser: 'chrome', engine: 'webkit' }`,
   },
   {
     id: 'umd',

@@ -50,6 +50,40 @@ export const oses = Object.freeze({
 export type OS = (typeof oses)[keyof typeof oses];
 
 /**
+ * The set of canonical rendering-engine identifiers returned by {@link getEngine}.
+ *
+ * The engine is often a more useful axis than the browser: rendering bugs are
+ * engine-level, and Apple forces *every* iOS browser onto WebKit, so
+ * `getEngine() === engines.WEBKIT` catches Safari, Chrome-iOS, Firefox-iOS, and
+ * Edge-iOS in one check — something {@link detect} can't express.
+ *
+ * - `blink` — the Chromium engine (Chrome, Edge, Opera, Brave, modern Android WebView).
+ * - `gecko` — Firefox on every platform *except* iOS.
+ * - `webkit` — Safari, plus every browser on iOS/iPadOS, plus the pre-2014 Android Browser.
+ * - `trident` — Internet Explorer.
+ * - `presto` — the original Opera engine (Opera 12 and earlier, Opera Mini).
+ * - `edgehtml` — legacy Microsoft Edge (versions 12–18, the `Edge/` token).
+ * - `unknown` — bots, brand-new engines, empty UA.
+ */
+export const engines = Object.freeze({
+  BLINK: 'blink',
+  EDGEHTML: 'edgehtml',
+  GECKO: 'gecko',
+  PRESTO: 'presto',
+  TRIDENT: 'trident',
+  WEBKIT: 'webkit',
+  UNKNOWN: 'unknown',
+} as const);
+
+/**
+ * Discriminated union of every value in {@link engines}.
+ *
+ * `getEngine()` is typed to return this. `'unknown'` overlaps with the
+ * {@link Browser} and {@link OS} unions but refers to a different dimension.
+ */
+export type Engine = (typeof engines)[keyof typeof engines];
+
+/**
  * Parsed User-Agent Client Hints. When supplied via {@link DetectOptions},
  * a detector reads these in preference to the UA string — which is important
  * because Chromium's User-Agent Reduction is removing entropy from UA strings

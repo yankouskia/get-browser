@@ -8,25 +8,28 @@ sidebar_position: 1
 
 # Introduction
 
-**`get-browser` answers two questions: which browser is this, and which OS is it on?**
+**`get-browser` answers three questions: which browser is this, what engine renders it, and which OS is it on?**
 
 ```ts
-import { detect, getOS, browsers, oses } from 'get-browser';
+import { detect, getEngine, getOS, browsers, engines, oses } from 'get-browser';
 
 detect();                         // → 'chrome' | 'edge' | 'firefox' | ...
+getEngine();                      // → 'blink' | 'gecko' | 'webkit' | 'trident' | 'presto' | 'edgehtml' | 'unknown'
 getOS();                          // → 'macos' | 'windows' | 'linux' | 'ios' | 'android' | 'chromeos' | 'unknown'
 
-detect() === browsers.SAFARI;     // → true on Safari (with the constant type-checked)
-getOS()   === oses.MACOS;         // → true on macOS — show ⌘ K instead of Ctrl K
+detect()    === browsers.SAFARI;  // → true on Safari (with the constant type-checked)
+getEngine() === engines.WEBKIT;   // → true on Safari AND every iOS browser (Chrome-iOS, Firefox-iOS, …)
+getOS()     === oses.MACOS;       // → true on macOS — show ⌘ K instead of Ctrl K
 ```
 
-That's the whole pitch. **~1.4 kB** min+gzip, zero dependencies, dual ESM + CJS, strict TypeScript types, and an SSR-safe API. It pairs `detect()` and `getOS()` with a handful of single-purpose predicates (`isChrome`, `isMobile`, …) when all you want is a boolean.
+That's the whole pitch. **~1.4 kB** min+gzip, zero dependencies, dual ESM + CJS, strict TypeScript types, and an SSR-safe API. It pairs `detect()`, `getEngine()`, and `getOS()` with a handful of single-purpose predicates (`isChrome`, `isMobile`, …) when all you want is a boolean.
 
 ## Should I use this?
 
 **Yes** if you need a small, typed, *who-is-this?* check for:
 
 - 🔧 Working around a known browser bug
+- 🎨 Applying an **engine-level** fix (e.g. a WebKit quirk that hits every iOS browser)
 - 📦 Loading a polyfill only when needed
 - 📊 Tagging analytics with browser family / engine
 - 🖼️ Rendering a "Download for your browser" / "Download for your OS" badge

@@ -7,12 +7,13 @@
  *
  * @example Quickstart
  * ```ts
- * import { detect, getOS, isMobile, browsers, oses } from 'get-browser';
+ * import { detect, getEngine, getOS, isMobile, browsers, engines, oses } from 'get-browser';
  *
  * if (detect() === browsers.SAFARI && isMobile()) {
  *   applyMobileSafariFix();
  * }
  *
+ * if (getEngine() === engines.WEBKIT) applyWebkitScrollFix();
  * if (getOS() === oses.MACOS) showCmdKShortcut();
  * ```
  *
@@ -20,6 +21,7 @@
  */
 
 export { detect } from './detect.js';
+export { getEngine } from './get-engine.js';
 export { getOS } from './get-os.js';
 export { isAndroid } from './is-android.js';
 export { isChrome } from './is-chrome.js';
@@ -35,6 +37,8 @@ export {
   browsers,
   type ClientHints,
   type DetectOptions,
+  type Engine,
+  engines,
   type OS,
   oses,
 } from './types.js';

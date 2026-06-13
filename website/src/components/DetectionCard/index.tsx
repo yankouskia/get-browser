@@ -3,6 +3,8 @@ import clsx from 'clsx';
 import {
   type Browser,
   detect,
+  type Engine,
+  getEngine,
   getOS,
   isAndroid,
   isChrome,
@@ -71,6 +73,26 @@ const OS_LABEL: Record<OS, string> = {
   ios: 'iOS / iPadOS',
   android: 'Android',
   chromeos: 'ChromeOS',
+  unknown: 'Unknown',
+};
+
+const ENGINE_EMOJI: Record<Engine, string> = {
+  blink: '🟦',
+  gecko: '🦎',
+  webkit: '🧭',
+  trident: '🪟',
+  presto: '🎭',
+  edgehtml: '🔷',
+  unknown: '❓',
+};
+
+const ENGINE_LABEL: Record<Engine, string> = {
+  blink: 'Blink (Chromium)',
+  gecko: 'Gecko',
+  webkit: 'WebKit',
+  trident: 'Trident',
+  presto: 'Presto',
+  edgehtml: 'EdgeHTML',
   unknown: 'Unknown',
 };
 
@@ -162,6 +184,7 @@ function DetectionCardInner() {
   // Empty UA = read from real navigator.
   const opts = activeUA ? { userAgent: activeUA } : undefined;
   const browser: Browser = detect(opts);
+  const engine: Engine = getEngine(opts);
   const os: OS = getOS(opts);
   const mobile = isMobile(opts);
 
@@ -209,6 +232,18 @@ function DetectionCardInner() {
               <code>{`'${os}'`}</code>
             </p>
             <p className={styles.subValue}>{OS_LABEL[os]}</p>
+          </div>
+        </div>
+        <div className={styles.headerLeft}>
+          <span className={styles.emoji} aria-hidden="true">
+            {ENGINE_EMOJI[engine]}
+          </span>
+          <div>
+            <p className={styles.label}>getEngine() →</p>
+            <p className={styles.value}>
+              <code>{`'${engine}'`}</code>
+            </p>
+            <p className={styles.subValue}>{ENGINE_LABEL[engine]}</p>
           </div>
         </div>
       </div>

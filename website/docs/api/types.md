@@ -9,7 +9,7 @@ sidebar_label: Types
 Type-only exports. Use `import type` so they're erased at runtime:
 
 ```ts
-import type { Browser, OS, DetectOptions, ClientHints } from 'get-browser';
+import type { Browser, OS, Engine, DetectOptions, ClientHints } from 'get-browser';
 ```
 
 ## `Browser`
@@ -38,30 +38,32 @@ Using `Browser` instead of plain `string` gives you:
 - **Exhaustiveness.** `switch` statements without a `default` flag missing cases.
 - **Autocomplete.** Editors offer the eight literal options.
 
-### Tagging analytics
+### Exhaustive mapping
 
-A classic use:
+A `Browser` value can drive an exhaustive `switch` — the compiler refuses to build if you miss a case:
 
 ```ts
 import { type Browser } from 'get-browser';
 
-type Engine = 'chromium' | 'gecko' | 'webkit' | 'trident' | 'legacy-webkit' | 'unknown';
+type Vendor = 'Google' | 'Microsoft' | 'Mozilla' | 'Apple' | 'Other';
 
-const engineOf = (b: Browser): Engine => {
+const vendorOf = (b: Browser): Vendor => {
   switch (b) {
     case 'chrome':
+    case 'android': return 'Google';
     case 'edge':
-    case 'opera':  return 'chromium';
-    case 'firefox': return 'gecko';
-    case 'safari':  return 'webkit';
-    case 'ie':      return 'trident';
-    case 'android': return 'legacy-webkit';
-    case 'unknown': return 'unknown';
+    case 'ie':      return 'Microsoft';
+    case 'firefox': return 'Mozilla';
+    case 'safari':  return 'Apple';
+    case 'opera':
+    case 'unknown': return 'Other';
   }
 };
 ```
 
-If a future major adds `'samsung'` to `Browser`, the `engineOf` switch breaks the build — exactly what you want.
+If a future major adds `'samsung'` to `Browser`, the `vendorOf` switch breaks the build — exactly what you want.
+
+> Want the **rendering engine**? Don't hand-roll a `browser → engine` map — it's wrong on iOS. Use [`getEngine()`](./get-engine), documented as [`Engine`](#engine) below.
 
 ## `OS`
 
@@ -79,6 +81,21 @@ type OS =
 What [`getOS()`](./get-os) returns. Derived from [`oses`](./get-os#the-oses-enum) the same way `Browser` is derived from `browsers`.
 
 `'android'` overlaps with `Browser`'s `'android'` (Android *WebView*) — but they're never produced by the same call. Use the source of the value, not its string, to know which dimension you're looking at.
+
+## `Engine`
+
+```ts
+type Engine =
+  | 'blink'
+  | 'edgehtml'
+  | 'gecko'
+  | 'presto'
+  | 'trident'
+  | 'webkit'
+  | 'unknown';
+```
+
+What [`getEngine()`](./get-engine) returns. Derived from [`engines`](./get-engine#the-engines-enum) the same way `Browser` is derived from `browsers`. This is the *rendering* axis — and unlike a hand-rolled `browser → engine` map, it's correct on iOS (every iOS browser is `'webkit'`).
 
 ## `DetectOptions`
 

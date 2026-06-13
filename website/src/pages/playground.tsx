@@ -5,11 +5,12 @@ import Layout from '@theme/Layout';
 import styles from './playground.module.css';
 
 const RECIPE = `import {
-  detect, getOS, isMobile, isInAppBrowser,
-  browsers, oses,
+  detect, getEngine, getOS, isMobile, isInAppBrowser,
+  browsers, engines, oses,
 } from 'get-browser';
 
 const browser = detect();
+const engine  = getEngine();
 const os      = getOS();
 
 switch (browser) {
@@ -18,6 +19,9 @@ switch (browser) {
   case browsers.FIREFOX: enableFirefoxOnlyFeature(); break;
   default:               /* nothing */              break;
 }
+
+// One check covers Safari + every iOS browser.
+if (engine === engines.WEBKIT) applyWebkitScrollFix();
 
 const shortcut = os === oses.MACOS ? '⌘ K' : 'Ctrl K';
 

@@ -290,27 +290,19 @@ if (isSafari() && isMobile()) {
 A real-world snippet collapsing browser, engine, and form-factor into one object you can spread into any event. See the [Analytics guide](./guides/analytics) for the full version.
 
 ```ts title="src/lib/analytics.ts"
-import { type Browser, detect, isMobile } from 'get-browser';
-
-type Engine = 'chromium' | 'gecko' | 'webkit' | 'trident' | 'legacy-webkit' | 'unknown';
-
-const engineOf = (b: Browser): Engine => ({
-  chrome: 'chromium', edge: 'chromium', opera: 'chromium',
-  firefox: 'gecko',  safari: 'webkit',
-  ie: 'trident',     android: 'legacy-webkit',
-  unknown: 'unknown',
-} as const)[b];
+import { detect, getEngine, isMobile } from 'get-browser';
 
 export function getUAContext(userAgent?: string) {
   const opts = userAgent ? { userAgent } : undefined;
-  const browser = detect(opts);
   return {
-    browser,
-    engine: engineOf(browser),
+    browser: detect(opts),    // 'chrome' | 'safari' | …
+    engine: getEngine(opts),  // 'blink'  | 'webkit' | … — correct on iOS
     form_factor: isMobile(opts) ? 'mobile' : 'desktop',
   };
 }
 ```
+
+`getEngine()` reads the engine from the UA, so Chrome-iOS / Firefox-iOS report `'webkit'` (what actually renders) instead of being mis-mapped to `'blink'` / `'gecko'`. See [`getEngine()`](./api/get-engine).
 
 ```ts
 analytics.track('page_view', {

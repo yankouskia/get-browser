@@ -11,31 +11,18 @@ A common, totally-legitimate use of UA sniffing: enrich analytics events with a 
 
 ## Engine family
 
+Use [`getEngine()`](/docs/api/get-engine) — it reads the engine straight from the UA:
+
 ```ts
-import { type Browser, detect } from 'get-browser';
-
-type Engine = 'chromium' | 'gecko' | 'webkit' | 'trident' | 'legacy-webkit' | 'unknown';
-
-const engineOf = (b: Browser): Engine => {
-  switch (b) {
-    case 'chrome':
-    case 'edge':
-    case 'opera':  return 'chromium';
-    case 'firefox': return 'gecko';
-    case 'safari':  return 'webkit';
-    case 'ie':      return 'trident';
-    case 'android': return 'legacy-webkit';
-    case 'unknown': return 'unknown';
-  }
-};
+import { detect, getEngine } from 'get-browser';
 
 analytics.track('page_view', {
-  browser: detect(),
-  engine: engineOf(detect()),
+  browser: detect(),   // 'chrome' | 'safari' | …  — the brand
+  engine: getEngine(), // 'blink'  | 'webkit' | …  — what actually renders
 });
 ```
 
-The compiler enforces the switch is exhaustive — if a future major adds a value to `Browser`, it stops being a valid `Engine` mapping.
+Why not just map `detect()` to an engine yourself? Because that mapping is **wrong on iOS**. A `{ chrome: 'blink', … }` lookup reports Chrome-iOS as Blink, but Apple forces every iOS browser onto WebKit — so the page is really rendered by WebKit. `getEngine()` knows the platform and returns `'webkit'` for Chrome-iOS, Firefox-iOS, and Edge-iOS. For engine-level analytics that's the difference between a true and a false signal.
 
 ## Form factor
 
@@ -53,33 +40,19 @@ analytics.track('cta_click', {
 A real-world snippet collapsing everything into one object you can spread into any event:
 
 ```ts title="src/lib/analytics.ts"
-import { type Browser, detect, isMobile } from 'get-browser';
+import { type Browser, detect, type Engine, getEngine, isMobile } from 'get-browser';
 
 export interface UAContext {
   browser: Browser;
-  engine: 'chromium' | 'gecko' | 'webkit' | 'trident' | 'legacy-webkit' | 'unknown';
+  engine: Engine;
   form_factor: 'mobile' | 'desktop';
 }
 
-const engineOf = (b: Browser): UAContext['engine'] => {
-  switch (b) {
-    case 'chrome':
-    case 'edge':
-    case 'opera':  return 'chromium';
-    case 'firefox': return 'gecko';
-    case 'safari':  return 'webkit';
-    case 'ie':      return 'trident';
-    case 'android': return 'legacy-webkit';
-    case 'unknown': return 'unknown';
-  }
-};
-
 export function getUAContext(userAgent?: string): UAContext {
   const opts = userAgent ? { userAgent } : undefined;
-  const browser = detect(opts);
   return {
-    browser,
-    engine: engineOf(browser),
+    browser: detect(opts),
+    engine: getEngine(opts),
     form_factor: isMobile(opts) ? 'mobile' : 'desktop',
   };
 }
